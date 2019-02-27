@@ -1,0 +1,12 @@
+
+.test-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.test-block {
+    width: 30vw;
+    margin: 10px;
+    min-width: 325px;
+}
