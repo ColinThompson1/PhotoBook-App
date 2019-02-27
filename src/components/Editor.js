@@ -5,9 +5,23 @@ import {OTControllerClient} from "../ot/ot_controller_client";
 
 class Editor extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            doc: {
+                canvas: {
+                    test1: ""
+                }
+            }
+        };
+
+        this.handleCanvasUpdate = this.handleCanvasUpdate.bind(this);
+    }
+
+
     componentDidMount() {
-        this.setupSocket();
-        this.setupOC();
+        // this.setupSocket();
+        // this.setupOC();
     }
 
     componentWillUnmount() {
@@ -28,14 +42,15 @@ class Editor extends React.Component {
         this.socket.on('edit', this.ot.receive)
     }
 
-    handleChange() {
-
+    handleCanvasUpdate(canvas) {
+        const doc = {...this.state.doc, canvas: canvas};
+        this.setState({...this.state, doc: doc});
     }
 
     render() {
         return (
             <div className="editor">
-                <POCCanvas/>
+                <POCCanvas data={this.state.doc.canvas} onChange={this.handleCanvasUpdate}/>
             </div>
         )
     }
