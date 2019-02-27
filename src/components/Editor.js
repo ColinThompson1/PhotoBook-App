@@ -9,9 +9,7 @@ class Editor extends React.Component {
         super(props);
         this.state = {
             doc: {
-                canvas: {
-                    test1: ""
-                }
+                canvas: {}
             }
         };
 
