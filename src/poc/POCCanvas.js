@@ -18,7 +18,6 @@ class POCCanvas extends React.Component {
     }
 
     handleChange(item, change) {
-        console.log(this.props.data);
         this.props.onChange({...this.props.data, [item]: change})
     }
 
@@ -26,8 +25,7 @@ class POCCanvas extends React.Component {
 
         return (
             <div className={"test-container"}>
-                <POCTestCase name={"Text Area Test2"}><POCTextBox text={this.props.data.test1} onChange={(change) => this.handleChange('test1', change)}/></POCTestCase>
-                <POCTestCase name={"Text Area Test1"}><POCTextBox text={this.props.data.test1} onChange={(change) => this.handleChange('test1', change)}/></POCTestCase>
+                <POCTestCase name={"Text Area Test"}><POCTextBox text={this.props.data.test1} onChange={(change) => this.handleChange('test1', change)}/></POCTestCase>
             </div>
         )
     }

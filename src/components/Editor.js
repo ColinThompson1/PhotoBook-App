@@ -1,6 +1,6 @@
 import React from "react";
 import POCCanvas from "../poc/POCCanvas";
-import socket from "../connection";
+import share from "../share";
 
 class Editor extends React.Component {
 
@@ -17,23 +17,40 @@ class Editor extends React.Component {
 
 
     componentDidMount() {
-        this.setupSocket();
+        let doc = share.get('testing', '1');
+        if (!doc.type) {
+            doc.create(this.state, 'ot-json1', {}, () => {
+                console.log("Created doc");
+                this.subscribeToChanges();
+            })
+        } else {
+            this.subscribeToChanges();
+        }
     }
 
     componentWillUnmount() {
-        console.log('disconnecting')
+
     }
 
-    setupSocket() {
-        socket.on('connect', () => console.log("connected"));
-        socket.on('disconnect', () => console.log("disconnected"));
-        socket.on('connect_error', () => alert("Could Not Connect To Server"));
-        socket.on('connect_timeout', () => alert("Could Not Connect To Server"));
+    subscribeToChanges() {
+        let query = share.createSubscribeQuery('testing', {});
+        update = update.bind(this);
+        query.on('ready', update);
+        query.on('changed', update);
+
+        function update() {
+            const doc = {...this.state.doc, canvas: query.results};
+            this.setState({...this.state, doc: doc});
+        }
     }
+
 
     handleCanvasUpdate(canvas) {
         const doc = {...this.state.doc, canvas: canvas};
         this.setState({...this.state, doc: doc});
+
+        const op = ['canvas', {i: canvas}];
+        share.get('testing', '1').submitOp(op)
     }
 
     render() {
