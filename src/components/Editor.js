@@ -1,6 +1,7 @@
 import React from "react";
 import POCCanvas from "../poc/POCCanvas";
-import share from "../share";
+import sharedb from "../sharedb";
+import otjson1 from "ot-json1";
 
 class Editor extends React.Component {
 
@@ -11,46 +12,32 @@ class Editor extends React.Component {
                 canvas: {}
             }
         };
-
+        this.otdoc = null;
         this.handleCanvasUpdate = this.handleCanvasUpdate.bind(this);
+        this.handleServerUpdate = this.handleServerUpdate.bind(this);
     }
 
 
     componentDidMount() {
-        let doc = share.get('testing', '1');
-        if (!doc.type) {
-            doc.create(this.state, 'ot-json1', {}, () => {
-                console.log("Created doc");
-                this.subscribeToChanges();
-            })
-        } else {
-            this.subscribeToChanges();
-        }
+        this.otdoc = sharedb.get('doc', 'df5c313c-fe9b-4e0d-89ca-bfef2cd38b6b');
+        console.log('version1 ' + this.otdoc.version);
+        this.otdoc.subscribe();
+        this.otdoc.on('op', this.handleServerUpdate)
     }
 
-    componentWillUnmount() {
+    componentWillUnmount() {}
 
+    handleServerUpdate() {
+        console.log('Updating from op');
+        console.log('version2 ' + this.otdoc.version);
+        this.setState({...this.state, doc: this.otdoc.data.doc});
     }
-
-    subscribeToChanges() {
-        let query = share.createSubscribeQuery('testing', {});
-        update = update.bind(this);
-        query.on('ready', update);
-        query.on('changed', update);
-
-        function update() {
-            const doc = {...this.state.doc, canvas: query.results};
-            this.setState({...this.state, doc: doc});
-        }
-    }
-
 
     handleCanvasUpdate(canvas) {
-        const doc = {...this.state.doc, canvas: canvas};
-        this.setState({...this.state, doc: doc});
-
-        const op = ['canvas', {i: canvas}];
-        share.get('testing', '1').submitOp(op)
+        const op = ['doc', 'canvas', [{r: {}}], [{i: canvas}]];
+        console.log('version3 ' + this.otdoc.version);
+        this.otdoc.submitOp(op)
+        console.log('version4 ' + this.otdoc.version);
     }
 
     render() {

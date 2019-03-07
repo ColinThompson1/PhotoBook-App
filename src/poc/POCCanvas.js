@@ -25,7 +25,7 @@ class POCCanvas extends React.Component {
 
         return (
             <div className={"test-container"}>
-                <POCTestCase name={"Text Area Test"}><POCTextBox text={this.props.data.test1} onChange={(change) => this.handleChange('test1', change)}/></POCTestCase>
+                <POCTestCase name={"Text Area Test"}><POCTextBox text={this.props.data ? this.props.data.test1 : ''} onChange={(change) => this.handleChange('test1', change)}/></POCTestCase>
             </div>
         )
     }
