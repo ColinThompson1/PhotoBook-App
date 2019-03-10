@@ -1,7 +1,6 @@
 import React from "react";
 import POCCanvas from "../poc/POCCanvas";
-import sharedb from "../sharedb";
-import otjson1 from "ot-json1";
+import conn from "../sharedb";
 
 class Editor extends React.Component {
 
@@ -14,30 +13,26 @@ class Editor extends React.Component {
         };
         this.otdoc = null;
         this.handleCanvasUpdate = this.handleCanvasUpdate.bind(this);
-        this.handleServerUpdate = this.handleServerUpdate.bind(this);
+        this.handleOTUpdate = this.handleOTUpdate.bind(this);
     }
 
 
     componentDidMount() {
-        this.otdoc = sharedb.get('doc', 'df5c313c-fe9b-4e0d-89ca-bfef2cd38b6b');
-        console.log('version1 ' + this.otdoc.version);
+        this.otdoc = conn.get('doc', 'e3be136c-df82-42d5-907f-6ccbbf85c79d');
         this.otdoc.subscribe();
-        this.otdoc.on('op', this.handleServerUpdate)
+        this.otdoc.on('load', this.handleOTUpdate);
+        this.otdoc.on('op', this.handleOTUpdate)
     }
 
     componentWillUnmount() {}
 
-    handleServerUpdate() {
-        console.log('Updating from op');
-        console.log('version2 ' + this.otdoc.version);
+    handleOTUpdate() {
         this.setState({...this.state, doc: this.otdoc.data.doc});
     }
 
     handleCanvasUpdate(canvas) {
         const op = ['doc', 'canvas', [{r: {}}], [{i: canvas}]];
-        console.log('version3 ' + this.otdoc.version);
         this.otdoc.submitOp(op)
-        console.log('version4 ' + this.otdoc.version);
     }
 
     render() {
