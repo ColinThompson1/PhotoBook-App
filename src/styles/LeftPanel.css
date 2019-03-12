@@ -1,0 +1,86 @@
+/* Left Panel */
+
+.left-panel {
+    position: fixed;
+    height: 100%;
+    width: 350px;
+    display: grid;
+    grid-template-columns: 70px auto;
+    grid-template-rows: 100%;
+}
+
+/* Side Menu */
+
+.side-menu {
+    height: inherit;
+    left: 0;
+    border-right: solid 1px #d1d1d1;
+    padding-top: 8px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.side-menu > ul {
+    padding-left: 0;
+    margin: 0;
+}
+
+.side-menu-item > a {
+    display: block;
+    text-decoration: none;
+}
+
+.side-menu-item > a:hover {
+    color: red;
+}
+
+.side-menu-item > a > span {
+    display: block;
+    margin-top: 3px;
+    font-size: 10px;
+    padding-bottom: 18px;
+}
+
+.side-menu-item > a > i {
+    padding: 3px 3px 0 3px;
+}
+
+.side-menu-item.active > a {
+    color: red;
+}
+
+/* Menu Detail */
+
+.menu-detail {
+    border-right: solid 1px #d1d1d1;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.test-ani {
+
+}
+/* starting EXIT animation */
+/*.messageout-exit {*/
+    /*opacity: 1;*/
+    /*transform: scale(1.01);*/
+/*}*/
+
+/*.st-effect-2.st-menu-open .st-pusher {*/
+    /*-webkit-transform: translate3d(300px, 0, 0);*/
+    /*transform: translate3d(300px, 0, 0);*/
+/*}*/
+
+/*.st-effect-2.st-menu {*/
+    /*z-index: 1;*/
+/*}*/
+
+/*.st-effect-2.st-menu-open .st-effect-2.st-menu {*/
+    /*visibility: visible;*/
+    /*-webkit-transition: -webkit-transform 0.5s;*/
+    /*transition: transform 0.5s;*/
+/*}*/
+
+/*.st-effect-2.st-menu::after {*/
+    /*display: none;*/
+/*}*/

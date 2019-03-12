@@ -9,7 +9,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Header></Header>
+                <Header name={"Untitled Photobook"}></Header>
                 <Editor></Editor>
             </div>
         );
