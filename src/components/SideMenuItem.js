@@ -33,6 +33,6 @@ export default SideMenuItem;
 SideMenuItem.propTypes = {
     active: PropTypes.bool,
     onClick: PropTypes.func.isRequired,
-    icon: PropTypes.string,
-    label: PropTypes.string
+    icon: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
 };
