@@ -1,4 +1,5 @@
 import * as React from "react";
+import PropTypes from 'prop-types';
 
 class MenuDetail extends React.Component {
 
@@ -17,3 +18,7 @@ class MenuDetail extends React.Component {
 }
 
 export default MenuDetail;
+
+MenuDetail.proptypes = {
+    children: PropTypes.node
+};

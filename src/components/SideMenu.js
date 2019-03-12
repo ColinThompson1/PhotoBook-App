@@ -1,5 +1,6 @@
 import React from "react";
 import SideMenuItem from "./SideMenuItem";
+import PropTypes from 'prop-types';
 
 class SideMenu extends React.Component {
 
@@ -37,7 +38,9 @@ class SideMenu extends React.Component {
 
     handleSelect(label, e) {
         this.setState({activeItem: label});
-        this.props.onUpdate(label, e);
+        if (this.props.onUpdate) {
+            this.props.onUpdate(label, e);
+        }
     }
 
     render() {
@@ -66,3 +69,7 @@ class SideMenu extends React.Component {
 }
 
 export default SideMenu;
+
+SideMenu.propTypes = {
+  onUpdate: PropTypes.func
+};

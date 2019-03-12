@@ -1,5 +1,6 @@
 import React, {Fragment} from "react";
-import {Button, Icon} from "@blueprintjs/core";
+import {Icon} from "@blueprintjs/core";
+import PropTypes from 'prop-types';
 
 class SideMenuItem extends React.Component {
 
@@ -28,3 +29,10 @@ class SideMenuItem extends React.Component {
 }
 
 export default SideMenuItem;
+
+SideMenuItem.propTypes = {
+    active: PropTypes.bool,
+    onClick: PropTypes.func.isRequired,
+    icon: PropTypes.string,
+    label: PropTypes.string
+};
