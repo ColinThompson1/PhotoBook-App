@@ -1,6 +1,8 @@
 import React from "react";
 import POCCanvas from "../poc/POCCanvas";
 import conn from "../sharedb";
+import LeftPanel from "./LeftPanel";
+import Canvas from "./Canvas";
 
 class Editor extends React.Component {
 
@@ -38,7 +40,9 @@ class Editor extends React.Component {
     render() {
         return (
             <div className="editor">
-                <POCCanvas data={this.state.doc.canvas} onChange={this.handleCanvasUpdate}/>
+                {/*<POCCanvas data={this.state.doc.canvas} onChange={this.handleCanvasUpdate}/>*/}
+                <LeftPanel></LeftPanel>
+                <Canvas></Canvas>
             </div>
         )
     }
