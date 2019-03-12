@@ -57,30 +57,3 @@
     grid-column-end: 3;
 }
 
-.test-ani {
-
-}
-/* starting EXIT animation */
-/*.messageout-exit {*/
-    /*opacity: 1;*/
-    /*transform: scale(1.01);*/
-/*}*/
-
-/*.st-effect-2.st-menu-open .st-pusher {*/
-    /*-webkit-transform: translate3d(300px, 0, 0);*/
-    /*transform: translate3d(300px, 0, 0);*/
-/*}*/
-
-/*.st-effect-2.st-menu {*/
-    /*z-index: 1;*/
-/*}*/
-
-/*.st-effect-2.st-menu-open .st-effect-2.st-menu {*/
-    /*visibility: visible;*/
-    /*-webkit-transition: -webkit-transform 0.5s;*/
-    /*transition: transform 0.5s;*/
-/*}*/
-
-/*.st-effect-2.st-menu::after {*/
-    /*display: none;*/
-/*}*/
