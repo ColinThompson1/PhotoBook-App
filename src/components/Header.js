@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import {Navbar} from "@blueprintjs/core";
+import {Button, Navbar} from "@blueprintjs/core";
 import {Alignment} from "@blueprintjs/core/lib/cjs/common/alignment";
 
 class Header extends React.Component {
@@ -10,6 +10,12 @@ class Header extends React.Component {
                 <Navbar className="bp3-dark">
                     <Navbar.Group align={Alignment.LEFT}>
                         <Navbar.Heading>PhotoBook Maker</Navbar.Heading>
+                    </Navbar.Group>
+                    <Navbar.Group align={Alignment.RIGHT}>
+                        <Button className="bp3-minimal" icon={"document"} text={this.props.name}/>
+                        <Navbar.Divider/>
+                        <Button className="bp3-minimal" icon={"user"}/>
+                        <Button className="bp3-minimal" icon={"cog"}/>
                     </Navbar.Group>
                 </Navbar>
             </Fragment>
