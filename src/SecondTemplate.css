@@ -1,0 +1,40 @@
+
+  .topLeft{
+  position:absolute;
+  top: 60px;
+  left: 800px;
+  }
+  /*  */
+  .topRight{
+  position:absolute;
+  top: 360px;
+  left: 400px;
+  
+  }
+  /*  Image   */
+  .bottomLeft{
+  position:absolute;
+  top: 350px;
+  left:800px;
+  }
+  /*   Text     */
+  .bottomRight{
+  position:absolute;
+  top: 550px;
+  left:850px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
