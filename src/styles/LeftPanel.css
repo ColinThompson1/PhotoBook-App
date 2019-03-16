@@ -28,10 +28,11 @@
 .side-menu-item > a {
     display: block;
     text-decoration: none;
+    color: #8DA7BE;
 }
 
 .side-menu-item > a:hover {
-    color: red;
+    color: #63808C;
 }
 
 .side-menu-item > a > span {
@@ -46,7 +47,7 @@
 }
 
 .side-menu-item.active > a {
-    color: red;
+    color: #065A82;
 }
 
 /* Menu Detail */
