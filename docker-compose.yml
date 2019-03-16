@@ -1,0 +1,38 @@
+version: "2"
+services:
+  app:
+    image: app
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    links:
+      - ds
+    networks:
+      - webappnetwork
+  ds:
+    image: ds
+    restart: always
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./ds:/ds
+      - /ds/node_modules
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    volumes:
+      - ./data-node:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --noauth --smallfiles
+    networks:
+      - webappnetwork
+networks:
+  webappnetwork:
+    driver: bridge
