@@ -1,21 +1,31 @@
-import React, {Fragment} from "react";
+import React from "react";
 import {asTestCase} from "./POCTestCase.js";
 
 import "./poc.css"
-import {Checkbox, EditableText, NumericInput} from "@blueprintjs/core";
+import POCTextBox from "./POCTextBox";
+import POCTestCase from "./POCTestCase";
 
 class POCCanvas extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return this.props.data !== nextProps.data;
+    }
+
+    handleChange(item, change) {
+        this.props.onChange({...this.props.data, [item]: change})
+    }
+
     render() {
-        const BooleanTest = asTestCase(props => <Checkbox/>);
-        const StringTest = asTestCase(props => <EditableText multiline={true} minLines={3} maxLines={4}/>);
-        const NumericTest = asTestCase(props => <NumericInput/>);
 
         return (
             <div className={"test-container"}>
-                <BooleanTest name={"Check Box Test"}/>
-                <StringTest name={"Text Area Test"}/>
-                <NumericTest name={"Slider Test"}/>
+                <POCTestCase name={"Text Area Test"}><POCTextBox text={this.props.data ? this.props.data.test1 : ''} onChange={(change) => this.handleChange('test1', change)}/></POCTestCase>
             </div>
         )
     }

@@ -1,41 +1,48 @@
 import React from "react";
 import POCCanvas from "../poc/POCCanvas";
-import io from "socket.io-client";
-import {OTControllerClient} from "../ot/ot_controller_client";
+import conn from "../sharedb";
+import LeftPanel from "./LeftPanel";
+import Canvas from "./Canvas";
 
 class Editor extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            doc: {
+                canvas: {}
+            }
+        };
+        this.otdoc = null;
+        this.handleCanvasUpdate = this.handleCanvasUpdate.bind(this);
+        this.handleOTUpdate = this.handleOTUpdate.bind(this);
+    }
+
+
     componentDidMount() {
-        this.setupSocket();
-        this.setupOC();
+        this.otdoc = conn.get('doc', 'e3be136c-df82-42d5-907f-6ccbbf85c79d');
+        this.otdoc.subscribe();
+        this.otdoc.on('load', this.handleOTUpdate);
+        this.otdoc.on('op', this.handleOTUpdate)
     }
 
-    componentWillUnmount() {
-        console.log('disconnecting')
+    componentWillUnmount() {}
+
+    handleOTUpdate() {
+        this.setState({...this.state, doc: this.otdoc.data.doc});
     }
 
-    setupSocket() {
-        this.socket = io(process.env.REACT_APP_DATA_SERVICE);
-        this.socket.on('connect', () => console.log("connected"));
-        this.socket.on('disconnect', () => console.log("disconnected"));
-        this.socket.on('connect_error', () => alert("Could Not Connect To Server"));
-        this.socket.on('connect_timeout', () => alert("Could Not Connect To Server"));
-    }
-
-    setupOC() {
-        this.ot = new OTControllerClient();
-        this.ot.setSend((data) => this.socket.emit('edit', data));
-        this.socket.on('edit', this.ot.receive)
-    }
-
-    handleChange() {
-
+    handleCanvasUpdate(canvas) {
+        const op = ['doc', 'canvas', [{r: {}}], [{i: canvas}]];
+        this.otdoc.submitOp(op)
     }
 
     render() {
         return (
             <div className="editor">
-                <POCCanvas/>
+                {/*<POCCanvas data={this.state.doc.canvas} onChange={this.handleCanvasUpdate}/>*/}
+                <LeftPanel></LeftPanel>
+                <Canvas></Canvas>
             </div>
         )
     }

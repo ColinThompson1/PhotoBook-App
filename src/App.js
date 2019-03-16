@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Header from './components/Header';
-import io from 'socket.io-client';
 
 import './App.css';
 import Editor from "./components/Editor";
@@ -10,7 +9,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Header></Header>
+                <Header name={"Untitled Photobook"}></Header>
                 <Editor></Editor>
             </div>
         );

@@ -3,20 +3,20 @@ import {Card} from "@blueprintjs/core";
 
 import "./poc.css"
 
-export function asTestCase(WrappedComponent) {
+class POCTestCase extends React.Component {
 
-    return class extends React.Component {
-
-        render() {
-            const {name, ...props} = this.props;
-            return (
-                <div className={"test-block"}>
-                    <Card interactive={true}>
-                        <h4>{name}</h4>
-                        <WrappedComponent {...props}/>
-                    </Card>
-                </div>
-            )
-        }
+    render() {
+        const {name, ...props} = this.props;
+        const Wrapped = this.props.other;
+        return (
+            <div className={"test-block"}>
+                <Card interactive={true}>
+                    <h4>{name}</h4>
+                    {this.props.children}
+                </Card>
+            </div>
+        )
     }
 }
+
+export default POCTestCase;
