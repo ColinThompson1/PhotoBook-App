@@ -20,7 +20,8 @@ class Editor extends React.Component {
 
 
     componentDidMount() {
-        this.otdoc = conn.get('doc', 'e3be136c-df82-42d5-907f-6ccbbf85c79d');
+        conn.debug = true;
+        this.otdoc = conn.get('doc', '8e92d720-605c-4f44-961f-b35d5982f099');
         this.otdoc.subscribe();
         this.otdoc.on('load', this.handleOTUpdate);
         this.otdoc.on('op', this.handleOTUpdate)
@@ -40,7 +41,7 @@ class Editor extends React.Component {
     render() {
         return (
             <div className="editor">
-                {/*<POCCanvas data={this.state.doc.canvas} onChange={this.handleCanvasUpdate}/>*/}
+                {<POCCanvas data={this.state.doc.canvas} onChange={this.handleCanvasUpdate}/>}
                 <LeftPanel></LeftPanel>
                 <Canvas></Canvas>
             </div>
