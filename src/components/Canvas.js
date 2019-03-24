@@ -16,7 +16,7 @@ const spec = {
         const delta = monitor.getDifferenceFromInitialOffset();
         const initOffset = monitor.getInitialSourceClientOffset();
 
-        if (component.items[item.id]) {
+        if (component.items && component.items[item.id]) {
             const left = Math.round(item.left + delta.x);
             const top = Math.round(item.top + delta.y);
 
