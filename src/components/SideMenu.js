@@ -49,6 +49,7 @@ class SideMenu extends React.Component {
             const active = this.state.activeItem === i.key;
             return (
                 <SideMenuItem
+                    key={i.label}
                     active={active}
                     icon={i.icon}
                     label={i.label}
