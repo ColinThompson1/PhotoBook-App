@@ -1,7 +1,12 @@
 import React from "react";
 import SideMenu from "./SideMenu";
 import MenuDetail from "./MenuDetail";
+import Box from "./item-types/Box";
 import LeftPanelStyle from "../styles/LeftPanel.css";
+
+const style = {
+  position: 'relative'
+};
 
 class LeftPanel extends React.Component {
 
@@ -22,7 +27,15 @@ class LeftPanel extends React.Component {
 
     getSideMenuContent() {
         return (
-            <p>Placeholder for {this.state.currentTab}</p>
+            <div style={style}>
+                <Box
+                    key={1}
+                    id={'c'}
+                    left={0}
+                    top={0}
+                    hideSourceOnDrag={false}
+                />
+            </div>
         )
     }
 
