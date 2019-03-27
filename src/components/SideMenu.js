@@ -2,42 +2,43 @@ import React from "react";
 import SideMenuItem from "./SideMenuItem";
 import PropTypes from 'prop-types';
 
+const navItems = [
+    {
+        key: 'templates',
+        icon: 'control',
+        label: 'Templates'
+    },
+    {
+        key: 'images',
+        icon: 'media',
+        label: 'Images'
+    },
+    {
+        key: 'text',
+        icon: 'new-text-box',
+        label: 'Text'
+    },
+    {
+        key: 'shapes',
+        icon: 'star',
+        label: 'Shapes'
+    },
+    {
+        key: 'emoji',
+        icon: 'heart',
+        label: 'Emoji'
+    },
+];
+
 class SideMenu extends React.Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            navItems: [
-                {
-                    key: 'templates',
-                    icon: 'control',
-                    label: 'Templates'
-                },
-                {
-                    key: 'images',
-                    icon: 'media',
-                    label: 'Images'
-                },
-                {
-                    key: 'text',
-                    icon: 'new-text-box',
-                    label: 'Text'
-                },
-                {
-                    key: 'shapes',
-                    icon: 'star',
-                    label: 'Shapes'
-                },
-            ],
-            activeItem: 'templates'
-        };
-
         this.handleSelect = this.handleSelect.bind(this);
     }
 
     handleSelect(label, e) {
-        this.setState({activeItem: label});
         if (this.props.onUpdate) {
             this.props.onUpdate(label, e);
         }
@@ -45,8 +46,8 @@ class SideMenu extends React.Component {
 
     render() {
 
-        let navItems = this.state.navItems.map((i) => {
-            const active = this.state.activeItem === i.key;
+        let menuItems = navItems.map((i) => {
+            const active = this.props.activePanel === i.key;
             return (
                 <SideMenuItem
                     key={i.label}
@@ -61,7 +62,7 @@ class SideMenu extends React.Component {
         return (
             <div className={"side-menu"}>
                 <ul>
-                    { navItems }
+                    {menuItems}
                 </ul>
             </div>
         )
@@ -72,5 +73,6 @@ class SideMenu extends React.Component {
 export default SideMenu;
 
 SideMenu.propTypes = {
-  onUpdate: PropTypes.func
+    onUpdate: PropTypes.func,
+    activePanel: PropTypes.string.isRequired
 };

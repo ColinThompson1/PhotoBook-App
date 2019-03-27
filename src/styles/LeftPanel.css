@@ -2,7 +2,7 @@
 
 .left-panel {
     position: relative;
-    height: 100%;
+    height: inherit;
     width: 100%;
     display: grid;
     grid-template-columns: 70px auto;
@@ -56,4 +56,41 @@
     border-right: solid 1px #c6c6c6;
     grid-column-start: 2;
     grid-column-end: 3;
+    height: inherit;
+}
+
+.scrollable-item {
+    width: 50px;
+    height: 50px;
+    margin: 5px 5px 5px 5px;
+    display: flex;
+}
+
+.scrollable-detail-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow-y: scroll;
+}
+
+/*Detail Types*/
+
+.emoji-detail {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+}
+
+.emoji-items {
+    display: flex;
+}
+
+/* Item Types */
+
+.item-image {
+    max-width: 100%;
+    max-height: 100%;
 }
