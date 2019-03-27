@@ -1,11 +1,11 @@
 import React from "react";
 import SideMenu from "./SideMenu";
 import MenuDetail from "./MenuDetail";
-import Box from "./item-types/Box";
+import EmojiItemsDetail from "./EmojiItemsDetail";
 import LeftPanelStyle from "../styles/LeftPanel.css";
 
-const style = {
-  position: 'relative'
+const panels = {
+    'emoji': <EmojiItemsDetail/>
 };
 
 class LeftPanel extends React.Component {
@@ -14,38 +14,25 @@ class LeftPanel extends React.Component {
         super(props);
 
         this.state = {
-            currentTab: 'templates'
+            activePanel: 'emoji'
         };
 
         this.updateDetailView = this.updateDetailView.bind(this);
-        this.getSideMenuContent = this.getSideMenuContent.bind(this);
     }
 
     updateDetailView(itemLabel, e) {
-        this.setState({currentTab: itemLabel});
-    }
-
-    getSideMenuContent() {
-        return (
-            <div style={style}>
-                <Box
-                    key={1}
-                    id={'c'}
-                    left={0}
-                    top={0}
-                    hideSourceOnDrag={false}
-                />
-            </div>
-        )
+        this.setState({activePanel: itemLabel});
     }
 
     render() {
-
         return (
             <div className={"left-panel"}>
-                <SideMenu onUpdate={this.updateDetailView}/>
+                <SideMenu
+                    onUpdate={this.updateDetailView}
+                    activePanel={this.state.activePanel}
+                />
                 <MenuDetail>
-                    {this.getSideMenuContent()}
+                    {panels[this.state.activePanel] ? panels[this.state.activePanel] : <p>Nothing here yet</p>}
                 </MenuDetail>
             </div>
         )

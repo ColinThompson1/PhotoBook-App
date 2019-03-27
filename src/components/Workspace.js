@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 
 class Workspace extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className={"workspace"}>

@@ -2,9 +2,10 @@ import React from "react";
 import ItemTypes from "./item-types/ItemTypes";
 import {DropTarget} from "react-dnd";
 import Box from "./item-types/Box";
-import { getElementOffset } from "../util/general-util.js"
+import {getElementOffset} from "../util/general-util.js"
 import * as uuid from "uuid";
 import PropTypes from 'prop-types';
+import EmojiItem from "./item-types/EmojiItem";
 import CanvasStyle from "../styles/Canvas.css";
 
 const spec = {
@@ -26,20 +27,36 @@ const spec = {
             const left = Math.round(delta.x - canvasOffset.left + initOffset.x);
             const top = Math.round(delta.y - canvasOffset.top + initOffset.y);
 
-            component.createItem(item.id + uuid.v4(), left, top);
+            component.createItem(item.id + uuid.v4(), left, top, item.itemType, item.initData);
         }
     },
 };
 
+const itemTypes = {
+    'BOX': (id, left, top, data) => {
+    },
+    'emoji': (id, left, top, data) => {
+        return (
+            <EmojiItem
+                id={id}
+                left={left}
+                top={top}
+                src={data.src}
+                isOnCanvas={true}
+                hideSourceOnDrag={true}
+            />
+        )
+    }
+};
+
 class Canvas extends React.Component {
+
     constructor() {
         super(...arguments);
         this.canvasRef = React.createRef();
 
-        // this.pageData = this.props.otDoc
-
         this.extractCanvasData = this.extractCanvasData.bind(this);
-        this.getCanvasPieces = this.getCanvasPieces.bind(this);
+        this.getCanvasElements = this.getCanvasElements.bind(this);
         this.moveItem = this.moveItem.bind(this);
         this.createItem = this.createItem.bind(this);
     }
@@ -48,7 +65,8 @@ class Canvas extends React.Component {
         this.extractCanvasData();
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+    }
 
     componentWillUpdate() {
         this.extractCanvasData();
@@ -60,27 +78,28 @@ class Canvas extends React.Component {
             .reduce((acc, key) => acc[key], this.props.otDoc.data);
 
         if (this.canvasData['pages']) {
-            const { items } = this.canvasData['pages']['page' + this.props.page];
+            const {items} = this.canvasData['pages']['page' + this.props.page];
             this.items = items;
         }
     }
 
     render() {
-        const { connectDropTarget } = this.props;
+        const {connectDropTarget} = this.props;
 
         return connectDropTarget(
             <div className={'canvas corner-page-shadow-br'} ref={this.canvasRef}>
                 <div>
-                    {this.getCanvasPieces()}
+                    {this.getCanvasElements()}
                 </div>
             </div>,
         )
     }
 
-    getCanvasPieces() {
+    getCanvasElements() {
         if (this.items) {
             return Object.keys(this.items).map(key => {
-                const { left, top} = this.items[key];
+                const {left, top, type, data} = this.items[key];
+                return itemTypes[type](key, left, top, data);
                 return (
                     <Box
                         key={key}
@@ -88,6 +107,7 @@ class Canvas extends React.Component {
                         left={left}
                         top={top}
                         hideSourceOnDrag={true}
+                        isOnCanvas={true}
                     />
                 )
             });
@@ -96,11 +116,12 @@ class Canvas extends React.Component {
 
     moveItem(id, left, top) {
         // Replace left and top
-        const op = [...this.props.docPath, 'pages', 'page0', 'items', id, ['top', {r: top}, {i: top}], ['left', {r: top}, {i: left}]];
+        const op = [...this.props.docPath, 'pages', 'page0', 'items', id, ['top', {r: top}, {i: top}], ['left', {r: left}, {i: left}]];
         this.props.otDoc.submitOp(op);
     }
 
-    createItem(id, left, top) {
+    createItem(id, left, top, type, data) {
+
         // Init pages if not already created
         if (!this.canvasData['pages']) {
             const op = [...this.props.docPath, 'pages', {i: {'page0': {'items': {}}}}];
@@ -108,7 +129,14 @@ class Canvas extends React.Component {
         }
 
         // Insert new item at id
-        const op = [...this.props.docPath, 'pages', 'page0', 'items', id, {i : { top: top, left: left}}];
+        const op = [...this.props.docPath, 'pages', 'page0', 'items', id, {
+            i: {
+                top: top,
+                left: left,
+                type: type,
+                data: data
+            }
+        }];
         this.props.otDoc.submitOp(op);
     }
 
@@ -118,7 +146,7 @@ class Canvas extends React.Component {
 
 }
 
-export default DropTarget(ItemTypes.BOX, spec, connect => ({
+export default DropTarget(ItemTypes.EMOJI, spec, connect => ({
     connectDropTarget: connect.dropTarget(),
 }))(Canvas)
 

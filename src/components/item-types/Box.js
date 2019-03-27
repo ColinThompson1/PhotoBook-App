@@ -1,6 +1,7 @@
 
 import React from 'react'
 import {asDraggable} from "../Draggable";
+import ItemTypes from "./ItemTypes";
 
 const style = {
     border: '1px dashed gray',
@@ -21,4 +22,4 @@ class Box extends React.Component {
         return <div style={style}>{this.state.title}</div>
     }
 }
-export default asDraggable(Box);
+export default asDraggable(Box, ItemTypes.BOX);
