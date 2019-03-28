@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import EmojiItem from "./item-types/EmojiItem";
 import CanvasStyle from "../styles/Canvas.css";
 
+
 const spec = {
     drop(props, monitor, component) {
         if (!component) {
