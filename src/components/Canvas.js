@@ -70,7 +70,7 @@ class Canvas extends React.Component {
     }
 
     componentWillUpdate() {
-        this.extractCanvasData();
+        //this.extractCanvasData();
     }
 
     extractCanvasData() {
@@ -85,6 +85,8 @@ class Canvas extends React.Component {
     }
 
     render() {
+        this.extractCanvasData();
+
         const {connectDropTarget} = this.props;
 
         return connectDropTarget(
@@ -92,6 +94,7 @@ class Canvas extends React.Component {
                 <div>
                     {this.getCanvasElements()}
                 </div>
+                {this.props.page}
             </div>,
         )
     }

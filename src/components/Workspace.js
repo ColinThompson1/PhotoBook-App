@@ -24,6 +24,7 @@ class Workspace extends React.Component {
                     page={this.state.page}
                 />
                 <div>
+                    <p>{this.state.page}</p>
                     <Button icon="chevron-left" onClick={() => {
                         if (this.state.page > 0)
                             this.setState({page: this.state.page -= 1})
