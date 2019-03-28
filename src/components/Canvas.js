@@ -117,7 +117,7 @@ class Canvas extends React.Component {
 
     moveItem(id, left, top) {
         // Replace left and top
-        const op = [...this.props.docPath, 'pages', 'page0', 'items', id, ['top', {r: top}, {i: top}], ['left', {r: left}, {i: left}]];
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['top', {r: top}, {i: top}], ['left', {r: left}, {i: left}]];
         this.props.otDoc.submitOp(op);
     }
 
@@ -130,7 +130,7 @@ class Canvas extends React.Component {
         }
 
         // Insert new item at id
-        const op = [...this.props.docPath, 'pages', 'page0', 'items', id, {
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, {
             i: {
                 top: top,
                 left: left,

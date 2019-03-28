@@ -29,29 +29,22 @@ class Workspace extends React.Component {
                             this.setState({page: this.state.page -= 1})
                     }}/>
                     <Button icon="chevron-right" onClick={() => {
-                        const canvasData = this.props.docPath
-                            .reduce((acc, key) => acc[key], this.props.otDoc.data);
-
-                        const pageCount = canvasData['pages'].length;
-
-                        console.log(pageCount);
+                        const pageCount = this.getNumberOfPagesInOTDoc();
 
                         if (this.state.page < pageCount -1)
                             this.setState({page: this.state.page += 1})
                     }}/>
                     <Button icon="add" onClick={() => {
-                        const canvasData = this.props.docPath
-                            .reduce((acc, key) => acc[key], this.props.otDoc.data);
-                        const pageCount = canvasData['pages'].length;
-                        const newpage = 'page' + pageCount+1;
+                        const pageCount = this.getNumberOfPagesInOTDoc();
+                        const newpage = 'page' + pageCount; //since pageCount is not 0 indexed
                         console.log(newpage);
 
-                        const op = [...this.props.docPath, 'pages', 'page1', {i: {'items': {}}}];
+                        const op = [...this.props.docPath, 'pages', newpage, {i: {'items': {}}}];
                         console.log(op);
 
                         this.props.otDoc.submitOp(op);
 
-                        //this.setState({page: this.state.page = 1})
+                        this.setState({page: this.state.page = pageCount})
 
                     }}/>
                 </div>
@@ -60,7 +53,16 @@ class Workspace extends React.Component {
         )
     }
 
+    getNumberOfPagesInOTDoc() {
+        const canvasData = this.props.docPath
+            .reduce((acc, key) => acc[key], this.props.otDoc.data);
+
+        return Object.keys(canvasData['pages']).length;
+    }
+
 }
+
+
 
 export default Workspace;
 
