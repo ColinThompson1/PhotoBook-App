@@ -1,7 +1,7 @@
 import * as React from "react";
 import Canvas from "./Canvas";
 import PropTypes from 'prop-types';
-import {Button, ButtonGroup} from "@blueprintjs/core";
+import {Button, ButtonGroup, Tag} from "@blueprintjs/core";
 
 
 
@@ -29,9 +29,9 @@ class Workspace extends React.Component {
                     canvas={this.props.canvas}
                     page={this.state.page}
                 />
-                <div>
-                    <p>{this.state.page}</p>
+                <div className={"pageControls"}>
                     <Button icon="chevron-left" onClick={() => this.decrementPage()}/>
+                    <Tag large={true}>Page: {this.state.page}</Tag>
                     <Button icon="chevron-right" onClick={() => this.incrementPage()}/>
                     <Button icon="add" onClick={() => this.addPage()}/>
                 </div>

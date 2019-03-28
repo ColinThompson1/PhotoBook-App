@@ -87,8 +87,7 @@ class Canvas extends React.Component {
                 <div>
                     {this.getCanvasElements()}
                 </div>
-                {this.props.page}
-            </div>,
+              </div>,
         )
     }
 
