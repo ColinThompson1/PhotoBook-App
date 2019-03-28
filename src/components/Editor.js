@@ -1,8 +1,9 @@
 import React from "react";
-import POCCanvas from "../poc/POCCanvas";
 import conn from "../sharedb";
 import LeftPanel from "./LeftPanel";
-import Canvas from "./Canvas";
+import Workspace from "./Workspace";
+import {Spinner} from "@blueprintjs/core";
+import EditorStyle from "../styles/MainEditor.css";
 
 class Editor extends React.Component {
 
@@ -11,11 +12,15 @@ class Editor extends React.Component {
         this.state = {
             doc: {
                 canvas: {}
-            }
+            },
+            isLoading: true
         };
-        this.otdoc = null;
+        this.otDoc = null;
         this.handleCanvasUpdate = this.handleCanvasUpdate.bind(this);
+        this.handleInitData = this.handleInitData.bind(this);
         this.handleOTUpdate = this.handleOTUpdate.bind(this);
+        this.getWorkspace = this.getWorkspace.bind(this);
+
     }
 
 
@@ -29,23 +34,37 @@ class Editor extends React.Component {
 
     componentWillUnmount() {}
 
+    handleInitData() {
+        this.setState({...this.state, doc: this.otDoc.data.doc, isLoading: false});
+    }
+
     handleOTUpdate() {
-        this.setState({...this.state, doc: this.otdoc.data.doc});
+        this.setState({...this.state, doc: this.otDoc.data.doc});
     }
 
     handleCanvasUpdate(canvas) {
         const op = ['doc', 'canvas', [{r: {}}], [{i: canvas}]];
-        this.otdoc.submitOp(op)
+        this.otDoc.submitOp(op)
     }
 
     render() {
         return (
             <div className="editor">
-                {<POCCanvas data={this.state.doc.canvas} onChange={this.handleCanvasUpdate}/>}
-                <LeftPanel></LeftPanel>
-                <Canvas></Canvas>
+                <LeftPanel/>
+                {this.getWorkspace()}
             </div>
         )
+    }
+
+    getWorkspace() {
+        if (this.state.isLoading) {
+            return <Spinner/>
+        } else {
+            return <Workspace
+                otDoc={this.otDoc}
+                docPath={['doc', 'canvas']}
+            />
+        }
     }
 }
 

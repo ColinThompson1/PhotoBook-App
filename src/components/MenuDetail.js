@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 
 class MenuDetail extends React.Component {
 
-    constructor() {
-        super();
-    }
-
     render() {
         return (
             <div className={"menu-detail"}>

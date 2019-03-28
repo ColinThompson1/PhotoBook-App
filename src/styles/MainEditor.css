@@ -1,0 +1,27 @@
+
+.editor {
+    display: grid;
+    grid-template-columns: 300px auto;
+    grid-template-rows: auto;
+    height: calc(100vh - 50px);
+    width: 100vw;
+}
+
+.left-panel {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.workspace {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    display: flex;
+    background-color: #CCD0D7;
+    z-index: 10;
+}
+
+.canvas {
+    height: 500px;
+    width: 750px;
+    margin: auto;
+}

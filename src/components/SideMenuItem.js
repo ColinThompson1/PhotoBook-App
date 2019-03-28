@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 
 class SideMenuItem extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         return nextProps.active !== this.props.active;
     }
