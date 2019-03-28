@@ -66,13 +66,6 @@ class Canvas extends React.Component {
         this.extractCanvasData();
     }
 
-    componentDidMount() {
-    }
-
-    componentWillUpdate() {
-        //this.extractCanvasData();
-    }
-
     extractCanvasData() {
         // Get the relevant canvas data from the ot document
         this.canvasData = this.props.docPath
