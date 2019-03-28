@@ -26,10 +26,10 @@ class Editor extends React.Component {
 
     componentDidMount() {
         conn.debug = true;
-        this.otdoc = conn.get('doc', 'ef6dfb3d-3ab9-45cf-b024-2dac0238b8aa');
-        this.otdoc.subscribe();
-        this.otdoc.on('load', this.handleOTUpdate);
-        this.otdoc.on('op', this.handleOTUpdate)
+        this.otDoc = conn.get('doc', '774ee64a-c65f-4f22-a950-f72396e963bf');
+        this.otDoc.subscribe();
+        this.otDoc.on('load', this.handleOTUpdate);
+        this.otDoc.on('op', this.handleOTUpdate)
     }
 
     componentWillUnmount() {}
@@ -39,7 +39,10 @@ class Editor extends React.Component {
     }
 
     handleOTUpdate() {
-        this.setState({...this.state, doc: this.otDoc.data.doc});
+        if (this.state.isLoading === true)
+            this.setState({...this.state, doc: this.otDoc.data.doc, isLoading: false});
+        else
+            this.setState({...this.state, doc: this.otDoc.data.doc});
     }
 
     handleCanvasUpdate(canvas) {
