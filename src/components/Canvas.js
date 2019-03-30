@@ -39,6 +39,7 @@ const itemTypes = {
     'emoji': (id, left, top, data) => {
         return (
             <EmojiItem
+                key={id}
                 id={id}
                 left={left}
                 top={top}
