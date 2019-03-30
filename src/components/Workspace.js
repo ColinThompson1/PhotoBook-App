@@ -62,10 +62,8 @@ class Workspace extends React.Component {
     addPage() {
         const pageCount = this.getNumberOfPagesInOTDoc();
         const newpage = 'page' + pageCount; //since pageCount is not 0 indexed
-        console.log(newpage);
 
         const op = [...this.props.docPath, 'pages', newpage, {i: {'items': {}}}];
-        console.log(op);
 
         this.props.otDoc.submitOp(op);
 
