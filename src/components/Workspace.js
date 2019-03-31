@@ -17,6 +17,7 @@ class Workspace extends React.Component {
         this.decrementPage = this.decrementPage.bind(this);
         this.incrementPage = this.incrementPage.bind(this);
         this.addPage = this.addPage.bind(this);
+        this.initPages = this.initPages.bind(this);
 
     }
 
@@ -40,10 +41,21 @@ class Workspace extends React.Component {
         )
     }
 
+    initPages() {
+        const op = [...this.props.docPath, 'pages', {i: {'page0': {'items': {}}}}];
+        this.props.otDoc.submitOp(op);
+    }
+
     getNumberOfPagesInOTDoc() {
-        const canvasData = this.props.docPath
+        let canvasData = this.props.docPath
             .reduce((acc, key) => acc[key], this.props.otDoc.data);
 
+        //check if any pages exist and initialize some if they don't
+        if (!canvasData['pages']) {
+            this.initPages();
+            canvasData = this.props.docPath
+                .reduce((acc, key) => acc[key], this.props.otDoc.data);
+        }
         return Object.keys(canvasData['pages']).length;
     }
 
