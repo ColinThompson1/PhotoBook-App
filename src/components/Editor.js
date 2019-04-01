@@ -25,8 +25,9 @@ class Editor extends React.Component {
 
 
     componentDidMount() {
+        //'42422d28-101b-4383-a395-0cef91b00f16'
         conn.debug = true;
-        this.otDoc = conn.get('doc', '42422d28-101b-4383-a395-0cef91b00f16');
+        this.otDoc = conn.get('doc', this.props.id);
         this.otDoc.subscribe();
         this.otDoc.on('load', this.handleOTUpdate);
         this.otDoc.on('op', this.handleOTUpdate)
