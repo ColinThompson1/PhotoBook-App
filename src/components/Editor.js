@@ -1,8 +1,9 @@
 import React from "react";
-import POCCanvas from "../poc/POCCanvas";
 import conn from "../sharedb";
 import LeftPanel from "./LeftPanel";
-import Canvas from "./Canvas";
+import Workspace from "./Workspace";
+import {Spinner} from "@blueprintjs/core";
+import EditorStyle from "../styles/MainEditor.css";
 
 class Editor extends React.Component {
 
@@ -11,40 +12,59 @@ class Editor extends React.Component {
         this.state = {
             doc: {
                 canvas: {}
-            }
+            },
+            isLoading: true
         };
-        this.otdoc = null;
+        this.otDoc = null;
         this.handleCanvasUpdate = this.handleCanvasUpdate.bind(this);
+        this.handleInitData = this.handleInitData.bind(this);
         this.handleOTUpdate = this.handleOTUpdate.bind(this);
+        this.getWorkspace = this.getWorkspace.bind(this);
+
     }
 
 
     componentDidMount() {
-        this.otdoc = conn.get('doc', 'e3be136c-df82-42d5-907f-6ccbbf85c79d');
-        this.otdoc.subscribe();
-        this.otdoc.on('load', this.handleOTUpdate);
-        this.otdoc.on('op', this.handleOTUpdate)
+        conn.debug = true;
+        this.otDoc = conn.get('doc', 'b53e63b1-aada-43f0-a126-c5e802119622');
+        this.otDoc.subscribe();
+        this.otDoc.on('load', this.handleInitData);
+        this.otDoc.on('op', this.handleOTUpdate);
     }
 
     componentWillUnmount() {}
 
+    handleInitData() {
+        this.setState({...this.state, doc: this.otDoc.data.doc, isLoading: false});
+    }
+
     handleOTUpdate() {
-        this.setState({...this.state, doc: this.otdoc.data.doc});
+        this.setState({...this.state, doc: this.otDoc.data.doc});
     }
 
     handleCanvasUpdate(canvas) {
         const op = ['doc', 'canvas', [{r: {}}], [{i: canvas}]];
-        this.otdoc.submitOp(op)
+        this.otDoc.submitOp(op)
     }
 
     render() {
         return (
             <div className="editor">
-                {/*<POCCanvas data={this.state.doc.canvas} onChange={this.handleCanvasUpdate}/>*/}
-                <LeftPanel></LeftPanel>
-                <Canvas></Canvas>
+                <LeftPanel/>
+                {this.getWorkspace()}
             </div>
         )
+    }
+
+    getWorkspace() {
+        if (this.state.isLoading) {
+            return <Spinner/>
+        } else {
+            return <Workspace
+                otDoc={this.otDoc}
+                docPath={['doc', 'canvas']}
+            />
+        }
     }
 }
 
