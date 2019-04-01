@@ -3,9 +3,11 @@ import SideMenu from "./SideMenu";
 import MenuDetail from "./MenuDetail";
 import EmojiItemsDetail from "./EmojiItemsDetail";
 import LeftPanelStyle from "../styles/LeftPanel.css";
+import EditableTextDetail from "./EditableTextDetail";
 
 const panels = {
-    'emoji': <EmojiItemsDetail/>
+    'emoji': <EmojiItemsDetail/>,
+    'text': <EditableTextDetail/>
 };
 
 class LeftPanel extends React.Component {

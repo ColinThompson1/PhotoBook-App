@@ -1,11 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const ScrollableItems = (props) => {
 
     function getItems() {
         return props.children.map((item) => {
             return (
-                <div key={item.key} className={'scrollable-item'}>
+                <div key={item.key}
+                     className={'scrollable-item ' + props.classNames}>
                     {item}
                 </div>
             )
@@ -20,3 +22,7 @@ const ScrollableItems = (props) => {
 };
 
 export default ScrollableItems;
+
+ScrollableItems.propTypes = {
+    classNames: PropTypes.string
+};
