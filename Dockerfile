@@ -15,8 +15,8 @@ COPY package*.json ./
 # Bundle app source
 COPY . .
 
-ENV REACT_APP_DATA_SERVICE=http://localhost:3002
-ENV PORT=3000
+#ENV REACT_APP_DATASERVICE=localhost:3002
+#ENV PORT=3000
 
 EXPOSE 3000
 CMD [ "npm", "start" ]

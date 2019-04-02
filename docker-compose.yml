@@ -1,38 +1,18 @@
-version: "2"
+version: "3"
 services:
   app:
-    image: app
+    build: .
     restart: always
     ports:
       - "3000:3000"
-    volumes:
-      - ./app:/app
-      - /app/node_modules
-    links:
-      - ds
-    networks:
-      - webappnetwork
+    environment:
+      - REACT_APP_DATASERVICE=localhost:3002
+      - PORT=3000
   ds:
-    image: ds
+    build: ../PhotoBook-DS
     restart: always
     ports:
       - "3002:3002"
-    volumes:
-      - ./ds:/ds
-      - /ds/node_modules
-    depends_on:
-      - mongodb
-  mongodb:
-    image: mongo
-    restart: always
-    container_name: mongodb
-    volumes:
-      - ./data-node:/data/db
-    ports:
-      - 27017:27017
-    command: mongod --noauth --smallfiles
-    networks:
-      - webappnetwork
-networks:
-  webappnetwork:
-    driver: bridge
+    environment:
+      - DB_CON_STR=mongodb://mongouser:il0vemongoDB!@cpsc559-mongodbatlas-cluster-shard-00-00-r1lqr.azure.mongodb.net:27017,cpsc559-mongodbatlas-cluster-shard-00-01-r1lqr.azure.mongodb.net:27017,cpsc559-mongodbatlas-cluster-shard-00-02-r1lqr.azure.mongodb.net:27017/test?ssl=true&replicaSet=CPSC559-mongodbAtlas-cluster-shard-0&authSource=admin&retryWrites=true
+      - USE_SSL=true
