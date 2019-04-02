@@ -1,6 +1,8 @@
 import * as React from "react";
 import {DragSource} from "react-dnd";
 import PropTypes from "prop-types";
+import {Menu, Popover} from "@blueprintjs/core";
+
 
 const canvasStyle = {
     cursor: 'move',
@@ -38,7 +40,16 @@ function asDraggable(WrappedComponent, itemType) {
 
             return connectDragSource(
                 <div style={{...(isOnCanvas ? canvasStyle : sourceStyle), top, left}}>
-                    <WrappedComponent {...this.props}/>
+                    <Popover
+                        content={
+                            <Menu>
+                                <Menu.Item icon="delete" onClick={this.props.onDelete} text="Delete item"/>
+                            </Menu>
+                        }
+                        position={"bottom"} usePortal={true}>
+                        <WrappedComponent {...this.props}/>
+                    </Popover>
+
                 </div>
             )
         }
@@ -49,6 +60,8 @@ function asDraggable(WrappedComponent, itemType) {
         isDragging: monitor.isDragging(),
     }))(DragItem)
 }
+
+
 
 export {
     asDraggable
