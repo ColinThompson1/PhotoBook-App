@@ -9,7 +9,7 @@
 }
 
 .corner-page-shadow-br:after {
-    z-index: -4;
+    z-index: -1;
     position: absolute;
     content: '';
     bottom: 15px;

@@ -18,6 +18,7 @@ class Workspace extends React.Component {
         this.incrementPage = this.incrementPage.bind(this);
         this.addPage = this.addPage.bind(this);
         this.initPages = this.initPages.bind(this);
+        this.deletePage = this.deletePage.bind(this);
 
     }
 
@@ -35,6 +36,7 @@ class Workspace extends React.Component {
                     <Tag large={true}>Page: {this.state.page}</Tag>
                     <Button icon="chevron-right" onClick={() => this.incrementPage()}/>
                     <Button icon="add" onClick={() => this.addPage()}/>
+                    <Button icon="delete" onClick={() => this.deletePage()}/>
                 </div>
             </div>
 
@@ -76,10 +78,47 @@ class Workspace extends React.Component {
         const newpage = 'page' + pageCount; //since pageCount is not 0 indexed
 
         const op = [...this.props.docPath, 'pages', newpage, {i: {'items': {}}}];
-
         this.props.otDoc.submitOp(op);
 
         this.setState({page: this.state.page = pageCount})
+
+    }
+
+    deletePage() {
+        const pageCount = this.getNumberOfPagesInOTDoc();
+
+        if (pageCount === 1) {
+            alert("You are about to delete this entire page.");
+            const op = [...this.props.docPath, 'pages', 'page'+this.state.page, 'items', {r: 'items'}, {i: {}}];
+            this.props.otDoc.submitOp(op);
+
+        } else if (this.state.page === pageCount - 1) {
+            let op = [[...this.props.docPath, 'pages', 'page'+this.state.page, {r: 'items'}]];
+            this.props.otDoc.submitOp(op);
+
+            this.decrementPage();
+
+        } else {
+            const numPagesToRename = (pageCount-1) - this.state.page;
+
+            let canvasData = this.props.docPath
+                .reduce((acc, key) => acc[key], this.props.otDoc.data);
+
+            //delete the page
+            let op = [[...this.props.docPath, 'pages', 'page'+this.state.page, {r: 'items'}]];
+            this.props.otDoc.submitOp(op);
+
+            //rename the pages
+            for (let i = this.state.page + 1; i < pageCount; i++) {
+                this.props.otDoc.submitOp([[[...this.props.docPath, 'pages', 'page' + i, {p:0}], [...this.props.docPath, 'pages', 'page' + (i - 1), {d:0}]]]);
+            }
+
+            console.log(op);
+           // this.props.otDoc.submitOp(op);
+        }
+
+
+
 
     }
 
