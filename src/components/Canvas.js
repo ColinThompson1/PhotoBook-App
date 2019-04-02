@@ -38,6 +38,7 @@ const itemTypes = {
     },
     'emoji': (id, left, top, data, zIndex, canvas) => {
         return (
+
              <EmojiItem
                  id={id}
                  left={left}

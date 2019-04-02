@@ -6,6 +6,7 @@ import Editor from "./components/Editor";
 import {DragDropContextProvider} from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Homepage from "./Homepage";
 
 
 
@@ -38,7 +39,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
     function Home() {
         return (
-            <h3>Login / Sign up</h3>
+            <Homepage/>
         )
     }
 
