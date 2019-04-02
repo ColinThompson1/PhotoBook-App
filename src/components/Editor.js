@@ -11,7 +11,8 @@ class Editor extends React.Component {
         super(props);
         this.state = {
             doc: {
-                canvas: {}
+                canvas: {},
+                panel: {}
             },
             isLoading: true
         };
@@ -19,20 +20,16 @@ class Editor extends React.Component {
         this.handleCanvasUpdate = this.handleCanvasUpdate.bind(this);
         this.handleInitData = this.handleInitData.bind(this);
         this.handleOTUpdate = this.handleOTUpdate.bind(this);
-        this.getWorkspace = this.getWorkspace.bind(this);
-
     }
 
 
     componentDidMount() {
         conn.debug = true;
-        this.otDoc = conn.get('doc', '03185878-d105-4b14-8539-f16474f32596');
+        this.otDoc = conn.get('doc', 'b33dfd7b-e5b6-4bc3-aeba-27278cff4dbe');
         this.otDoc.subscribe();
         this.otDoc.on('load', this.handleOTUpdate);
         this.otDoc.on('op', this.handleOTUpdate)
     }
-
-    componentWillUnmount() {}
 
     handleInitData() {
         this.setState({...this.state, doc: this.otDoc.data.doc, isLoading: false});
@@ -51,24 +48,25 @@ class Editor extends React.Component {
     }
 
     render() {
-        return (
-            <div className="editor">
-                <LeftPanel/>
-                {this.getWorkspace()}
-            </div>
-        )
-    }
-
-    getWorkspace() {
         if (this.state.isLoading) {
-            return <Spinner/>
+            return (
+                    <div className="editor-loading">
+                        <Spinner intent={'primary'} size={Spinner.SIZE_LARGE}/>
+                    </div>
+                );
         } else {
-            return <Workspace
-                otDoc={this.otDoc}
-                docPath={['doc', 'canvas']}
-            />
+            return (
+                <div className="editor">
+                    <LeftPanel otDoc={this.otDoc} otPath={['doc', 'panel']}/>
+                    <Workspace
+                        otDoc={this.otDoc}
+                        docPath={['doc', 'canvas']}
+                    />
+                </div>
+            );
         }
     }
+
 }
 
 export default Editor;

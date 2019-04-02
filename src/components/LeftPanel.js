@@ -2,13 +2,11 @@ import React from "react";
 import SideMenu from "./SideMenu";
 import MenuDetail from "./MenuDetail";
 import EmojiItemsDetail from "./EmojiItemsDetail";
-import LeftPanelStyle from "../styles/LeftPanel.css";
 import EditableTextDetail from "./EditableTextDetail";
+import ImageItemDetail from "./ImageItemDetail";
+import PropTypes from 'prop-types';
+import LeftPanelStyle from "../styles/LeftPanel.css";
 
-const panels = {
-    'emoji': <EmojiItemsDetail/>,
-    'text': <EditableTextDetail/>
-};
 
 class LeftPanel extends React.Component {
 
@@ -17,6 +15,12 @@ class LeftPanel extends React.Component {
 
         this.state = {
             activePanel: 'emoji'
+        };
+
+        this.panels = {
+            'emoji': <EmojiItemsDetail/>,
+            'text': <EditableTextDetail/>,
+            'images': <ImageItemDetail otDoc={this.props.otDoc} otPath={this.props.otPath}/>
         };
 
         this.updateDetailView = this.updateDetailView.bind(this);
@@ -34,7 +38,7 @@ class LeftPanel extends React.Component {
                     activePanel={this.state.activePanel}
                 />
                 <MenuDetail>
-                    {panels[this.state.activePanel] ? panels[this.state.activePanel] : <p>Nothing here yet</p>}
+                    {this.panels[this.state.activePanel] ? this.panels[this.state.activePanel] : <p>Nothing here yet</p>}
                 </MenuDetail>
             </div>
         )
@@ -43,3 +47,8 @@ class LeftPanel extends React.Component {
 }
 
 export default LeftPanel;
+
+LeftPanel.propTypes = {
+    otDoc: PropTypes.object.isRequired,
+    otPath: PropTypes.array.isRequired
+};

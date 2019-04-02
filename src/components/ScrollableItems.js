@@ -4,14 +4,16 @@ import PropTypes from "prop-types";
 const ScrollableItems = (props) => {
 
     function getItems() {
-        return props.children.map((item) => {
-            return (
-                <div key={item.key}
-                     className={'scrollable-item ' + props.classNames}>
-                    {item}
-                </div>
-            )
-        });
+        if (props.children) {
+            return props.children.map((item) => {
+                return (
+                    <div key={item.key}
+                         className={'scrollable-item ' + props.classNames}>
+                        {item}
+                    </div>
+                )
+            });
+        }
     }
 
     return (

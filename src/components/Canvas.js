@@ -77,7 +77,6 @@ class Canvas extends React.Component {
                 )
             }
         };
-
         this.extractCanvasData = this.extractCanvasData.bind(this);
         this.getCanvasElements = this.getCanvasElements.bind(this);
         this.moveItem = this.moveItem.bind(this);
