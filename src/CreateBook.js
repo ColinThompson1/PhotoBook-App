@@ -43,13 +43,24 @@ class CreateBook extends Component {
         })
             .then(function (response) {
                 console.log(response.data.id);
-
+                localStorage.setItem('docID', response.data.id);
+                axios.post("/user/pb", {
+                    "username": localStorage.getItem('username'),
+                    "docID" : localStorage.getItem('docID')
+                });
                 window.location.replace("http://localhost:3000/book/" + response.data.id);
 
             })
             .catch(function (error) {
                 console.log(error);
             });
+
+
+
+
+
+
+
 
 
 
