@@ -36,17 +36,18 @@ const spec = {
 const itemTypes = {
     'BOX': (id, left, top, data) => {
     },
-    'emoji': (id, left, top, data) => {
+    'emoji': (id, left, top, data, canvas) => {
         return (
-            <EmojiItem
-                key={id}
-                id={id}
-                left={left}
-                top={top}
-                src={data.src}
-                isOnCanvas={true}
-                hideSourceOnDrag={true}
-            />
+
+             <EmojiItem
+                 id={id}
+                 left={left}
+                 top={top}
+                 src={data.src}
+                 isOnCanvas={true}
+                 hideSourceOnDrag={true}
+                 onDelete={() => canvas.deleteItem(id)}
+             />
         )
     }
 };
@@ -61,11 +62,13 @@ class Canvas extends React.Component {
         this.getCanvasElements = this.getCanvasElements.bind(this);
         this.moveItem = this.moveItem.bind(this);
         this.createItem = this.createItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     componentWillMount() {
-        this.extractCanvasData();
     }
+
+
 
     extractCanvasData() {
         // Get the relevant canvas data from the ot document
@@ -96,7 +99,7 @@ class Canvas extends React.Component {
         if (this.items) {
             return Object.keys(this.items).map(key => {
                 const {left, top, type, data} = this.items[key];
-                return itemTypes[type](key, left, top, data);
+                return itemTypes[type](key, left, top, data, this);
                 return (
                     <Box
                         key={key}
@@ -109,6 +112,13 @@ class Canvas extends React.Component {
                 )
             });
         }
+    }
+
+    deleteItem(id) {
+        //delete the item
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, {r: id} ]
+        this.props.otDoc.submitOp(op);
+
     }
 
     moveItem(id, left, top) {

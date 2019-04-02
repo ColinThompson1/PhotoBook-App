@@ -17,5 +17,6 @@ export default asDraggable(EmojiItem, ItemTypes.EMOJI);
 
 EmojiItem.propTypes = {
     id: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired
+    src: PropTypes.string.isRequired,
+    onDelete: PropTypes.func
 };
