@@ -5,7 +5,10 @@ import './App.css';
 import {Navbar, Button, Alignment, Text, Card, Elevation} from "@blueprintjs/core";
 import ReactDOM from "react-dom";
 import Register from "./Register";
+import axios from 'axios'
 import Login from "./Login"
+import Book from "./index";
+
 
 
 var sectionStyle = {
@@ -28,11 +31,37 @@ function LoginFunc() {
     ReactDOM.render(<Login />, document.getElementById('root'));
 }
 
-function RegisterFunc() {
-    ReactDOM.render(<Register />, document.getElementById('root'));
-}
+
 
 class CreateBook extends Component {
+
+    handleSubmit(event){
+        axios.post('https://localhost:3002/create', {
+            "doc": {
+                "canvas": {}
+            }
+        })
+            .then(function (response) {
+                console.log(response.data.id);
+
+                window.location.replace("http://localhost:3000/book/" + response.data.id);
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
+
+        event.preventDefault();
+    }
+
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+
 
     render() {
         return (
@@ -60,7 +89,7 @@ class CreateBook extends Component {
 
 
 
-                                <Button /*onClick={this.handleSubmit}*/>Create Book</Button>
+                                <Button onClick={this.handleSubmit}>Create Book</Button>
 
                             </form>
                         </Card>
