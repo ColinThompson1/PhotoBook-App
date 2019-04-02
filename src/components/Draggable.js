@@ -31,7 +31,8 @@ function asDraggable(WrappedComponent, itemType) {
                 isDragging,
                 left,
                 top,
-                isOnCanvas
+                isOnCanvas,
+                zIndex
             } = this.props;
 
             if (isDragging && hideSourceOnDrag) {
@@ -39,11 +40,13 @@ function asDraggable(WrappedComponent, itemType) {
             }
 
             return connectDragSource(
-                <div style={{...(isOnCanvas ? canvasStyle : sourceStyle), top, left}}>
+                <div style={{...(isOnCanvas ? canvasStyle : sourceStyle), top, left, zIndex}}>
                     <Popover
                         content={
                             <Menu>
                                 <Menu.Item icon="delete" onClick={this.props.onDelete} text="Delete item"/>
+                                <Menu.Item icon="double-chevron-up" onClick={this.props.onSendToBack} text="Send to back"/>
+                                <Menu.Item icon="double-chevron-down" onClick={this.props.onBringToFront} text="Bring to front"/>
                             </Menu>
                         }
                         position={"bottom"} usePortal={true}>

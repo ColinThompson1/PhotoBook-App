@@ -36,16 +36,19 @@ const spec = {
 const itemTypes = {
     'BOX': (id, left, top, data) => {
     },
-    'emoji': (id, left, top, data, canvas) => {
+    'emoji': (id, left, top, data, zIndex, canvas) => {
         return (
              <EmojiItem
                  id={id}
                  left={left}
                  top={top}
+                 zIndex={zIndex}
                  src={data.src}
                  isOnCanvas={true}
                  hideSourceOnDrag={true}
                  onDelete={() => canvas.deleteItem(id)}
+                 onSendToBack={() => canvas.sendToBack(id, zIndex)}
+                 onBringToFront={() => canvas.bringToFront(id, zIndex)}
              />
         )
     }
@@ -62,6 +65,9 @@ class Canvas extends React.Component {
         this.moveItem = this.moveItem.bind(this);
         this.createItem = this.createItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
+        this.sendToBack = this.sendToBack.bind(this);
+        this.bringToFront = this.bringToFront.bind(this);
+
     }
 
     componentWillMount() {
@@ -97,8 +103,8 @@ class Canvas extends React.Component {
     getCanvasElements() {
         if (this.items) {
             return Object.keys(this.items).map(key => {
-                const {left, top, type, data} = this.items[key];
-                return itemTypes[type](key, left, top, data, this);
+                const {left, top, type, data, zIndex} = this.items[key];
+                return itemTypes[type](key, left, top, data, zIndex, this);
                 return (
                     <Box
                         key={key}
@@ -116,6 +122,20 @@ class Canvas extends React.Component {
     deleteItem(id) {
         //delete the item
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, {r: id} ]
+        this.props.otDoc.submitOp(op);
+
+    }
+
+    sendToBack(id, zIndex) {
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 0}]];
+        this.props.otDoc.submitOp(op);
+
+    }
+
+
+    bringToFront(id, zIndex) {
+        //z-index 2 will be top most element
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 2}]];
         this.props.otDoc.submitOp(op);
 
     }
@@ -139,6 +159,7 @@ class Canvas extends React.Component {
             i: {
                 top: top,
                 left: left,
+                zIndex: 1,
                 type: type,
                 data: data
             }
