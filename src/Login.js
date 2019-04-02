@@ -66,7 +66,8 @@ class Login extends Component {
         axios
             .post('/user/login', {
                 username: this.state.username,
-                password: this.state.password
+                password: this.state.password,
+                photobooks: []
             })
             .then(response => {
                 console.log('login response: ')
@@ -77,6 +78,7 @@ class Login extends Component {
                         className: "recipe-toaster",
                         position: Position.BOTTOM,
                     }).show({message:"Logged in!", intent:Intent.SUCCESS});
+                    localStorage.setItem('username', this.state.username);
 
                     // update App.js state
 

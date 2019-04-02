@@ -65,4 +65,11 @@ router.post('/logout', (req, res) => {
     }
 })
 
+router.post('/photobook', (req,res) => {
+    console.log("Adding photobook.");
+    const username = req.username;
+    User.update({username : username}, { photobooks: photobooks.push(req.body.docID) });
+
+})
+
 module.exports = router;
