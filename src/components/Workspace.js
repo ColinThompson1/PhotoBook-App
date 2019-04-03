@@ -98,31 +98,32 @@ class Workspace extends React.Component {
 
     deletePage() {
         const pageCount = this.getNumberOfPagesInOTDoc();
+        let confirmation = window.confirm("You are about to delete this entire page. Do you want to continue?");
 
-        if (pageCount === 1) {
-            alert("You are about to delete this entire page.");
-            const op = [...this.props.docPath, 'pages', 'page'+this.state.page, 'items', {r: 'items'}, {i: {}}];
-            this.props.otDoc.submitOp(op);
+        if (confirmation) {
+            if (pageCount === 1) {
+                const op = [...this.props.docPath, 'pages', 'page' + this.state.page, 'items', {r: 'items'}, {i: {}}];
+                this.props.otDoc.submitOp(op);
 
-        } else if (this.state.page === pageCount - 1) {
-            let op = [[...this.props.docPath, 'pages', 'page'+this.state.page, {r: 'items'}]];
-            this.props.otDoc.submitOp(op);
+            } else if (this.state.page === pageCount - 1) {
+                let op = [[...this.props.docPath, 'pages', 'page' + this.state.page, {r: 'items'}]];
+                this.props.otDoc.submitOp(op);
 
-            this.decrementPage();
+                this.decrementPage();
 
-        } else {
+            } else {
 
-            //delete the page
-            let op = [...this.props.docPath, 'pages', ['page'+this.state.page, {r: 'items'}]];
+                //delete the page
+                let op = [...this.props.docPath, 'pages', ['page' + this.state.page, {r: 'items'}]];
 
-            //rename the pages
-            for (let i = this.state.page + 1; i < pageCount; i++) {
-                op.push(['page' + i, {p:i}]);
-                op.push( ['page' + (i - 1), {d:i}]);
+                //rename the pages
+                for (let i = this.state.page + 1; i < pageCount; i++) {
+                    op.push(['page' + i, {p: i}]);
+                    op.push(['page' + (i - 1), {d: i}]);
+                }
+
+                this.props.otDoc.submitOp(op);
             }
-
-            console.log(JSON.stringify(op));
-            this.props.otDoc.submitOp(op);
         }
 
 

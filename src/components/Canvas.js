@@ -121,12 +121,7 @@ class Canvas extends React.Component {
         }
     }
 
-    deleteItem(id) {
-        //delete the item
-        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, {r: id} ]
-        this.props.otDoc.submitOp(op);
 
-    }
 
     returnToMiddle(id, zIndex) {
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 1}]];
@@ -139,7 +134,6 @@ class Canvas extends React.Component {
 
     }
 
-
     bringToFront(id, zIndex) {
         //z-index 2 will be top most element
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 2}]];
@@ -151,6 +145,13 @@ class Canvas extends React.Component {
         // Replace left and top
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['top', {r: top}, {i: top}], ['left', {r: left}, {i: left}]];
         this.props.otDoc.submitOp(op);
+    }
+
+    deleteItem(id) {
+        //delete the item
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, {r: id} ]
+        this.props.otDoc.submitOp(op);
+
     }
 
     createItem(id, left, top, type, data) {
