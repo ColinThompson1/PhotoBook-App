@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Background from './images/back.png';
+import Background from './images/back2.png';
 
 import './App.css';
 import {Navbar, Button, Alignment, Text} from "@blueprintjs/core";
