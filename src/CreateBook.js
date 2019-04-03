@@ -61,6 +61,7 @@ class CreateBook extends Component {
         super()
         this.state = {
             bookname: '',
+            htmlList: '',
             books: '',
             isLoaded: false,
             links:[],
@@ -141,10 +142,10 @@ class CreateBook extends Component {
 
             var s = this.state.tags.toString().replace(/,/g, "");
             this.setState({
-                bookname: s
+                htmlList: s
             })
 
-            console.log(this.state.bookname)
+            console.log(this.state.htmlList)
 
 
 
@@ -195,7 +196,7 @@ class CreateBook extends Component {
                             <section style={photobookList}>
                                 <p style={{
                                     'whiteSpace': 'pre-wrap'
-                                }}>{ReactHtmlParser(this.state.bookname)}</p>
+                                }}>{ReactHtmlParser(this.state.htmlList)}</p>
 
                             </section>
 
