@@ -39,22 +39,32 @@ function asDraggable(WrappedComponent, itemType) {
                 return null
             }
 
-            return connectDragSource(
-                <div style={{...(isOnCanvas ? canvasStyle : sourceStyle), top, left, zIndex}}>
-                    <Popover
-                        content={
-                            <Menu>
-                                <Menu.Item icon="delete" onClick={this.props.onDelete} text="Delete item"/>
-                                <Menu.Item icon="double-chevron-up" onClick={this.props.onSendToBack} text="Send to back"/>
-                                <Menu.Item icon="double-chevron-down" onClick={this.props.onBringToFront} text="Bring to front"/>
-                            </Menu>
-                        }
-                        position={"bottom"} usePortal={true}>
-                        <WrappedComponent {...this.props}/>
-                    </Popover>
+            if (isOnCanvas) {
+                return connectDragSource(
+                    <div style={{...(isOnCanvas ? canvasStyle : sourceStyle), top, left, zIndex}}>
+                        <Popover
+                            content={
+                                <Menu>
+                                    <Menu.Item icon="delete" onClick={this.props.onDelete} text="Delete item"/>
+                                    <Menu.Item icon="double-chevron-up" onClick={this.props.onSendToBack} text="Send to back"/>
+                                    <Menu.Item icon="ungroup-objects" onClick={this.props.onReturnToMiddle} text="Return to middle"/>
+                                    <Menu.Item icon="double-chevron-down" onClick={this.props.onBringToFront} text="Bring to front"/>
+                                </Menu>
+                            }
+                            position={"bottom"} usePortal={true}>
+                            <WrappedComponent {...this.props}/>
+                        </Popover>
 
-                </div>
-            )
+                    </div>
+                )
+            } else {
+                return connectDragSource(
+                    <div style={{...(isOnCanvas ? canvasStyle : sourceStyle), top, left, zIndex}}>
+                            <WrappedComponent {...this.props}/>
+                    </div>
+                )
+            }
+
         }
     };
 

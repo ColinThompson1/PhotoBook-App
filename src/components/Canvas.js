@@ -57,6 +57,7 @@ class Canvas extends React.Component {
                         onDelete={() => canvas.deleteItem(id)}
                         onSendToBack={() => canvas.sendToBack(id, zIndex)}
                         onBringToFront={() => canvas.bringToFront(id, zIndex)}
+                        onReturnToMiddle={() => canvas.returnToMiddle(id, zIndex)}
                     />
                 )
             },
@@ -100,6 +101,7 @@ class Canvas extends React.Component {
         this.deleteItem = this.deleteItem.bind(this);
         this.sendToBack = this.sendToBack.bind(this);
         this.bringToFront = this.bringToFront.bind(this);
+        this.returnToMiddle = this.returnToMiddle.bind(this);
         this.submitDataOp = this.submitDataOp.bind(this);
     }
 
@@ -125,8 +127,6 @@ class Canvas extends React.Component {
         const {connectDropTarget} = this.props;
 
         return connectDropTarget(
-
-
             <div className={'canvas corner-page-shadow-br'} ref={this.canvasRef}>
                 <div>
                     {this.getCanvasElements()}
@@ -144,11 +144,11 @@ class Canvas extends React.Component {
         }
     }
 
-    deleteItem(id) {
-        //delete the item
-        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, {r: id} ]
-        this.props.otDoc.submitOp(op);
 
+
+    returnToMiddle(id, zIndex) {
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 1}]];
+        this.props.otDoc.submitOp(op);
     }
 
     sendToBack(id, zIndex) {
@@ -156,7 +156,6 @@ class Canvas extends React.Component {
         this.props.otDoc.submitOp(op);
 
     }
-
 
     bringToFront(id, zIndex) {
         //z-index 2 will be top most element
@@ -169,6 +168,13 @@ class Canvas extends React.Component {
         // Replace left and top
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['top', {r: top}, {i: top}], ['left', {r: left}, {i: left}]];
         this.props.otDoc.submitOp(op);
+    }
+
+    deleteItem(id) {
+        //delete the item
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, {r: id} ]
+        this.props.otDoc.submitOp(op);
+
     }
 
     createItem(id, left, top, type, data) {

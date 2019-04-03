@@ -5,46 +5,30 @@ import ScrollableItems from "./ScrollableItems";
 import EmojiItem from "./item-types/EmojiItem";
 
 const emojiTypes = [
-    // {
-    //     key: '_alt',
-    //     icon: 'database'
-    // },
     {
         key: 'activity',
-        icon: 'database'
+        icon: 'walk'
     },
-    // {
-    //     key: 'diversity',
-    //     icon: 'database'
-    // },
+    {
+        key: 'people',
+        icon: 'person'
+    },
+    {
+        key: 'diversity',
+        icon: 'people'
+    },
     {
         key: 'flags',
         icon: 'flag'
     },
     {
         key: 'food',
-        icon: 'database'
+        icon: 'glass'
     },
     {
         key: 'nature',
         icon: 'tree'
     },
-    // {
-    //     key: 'objects',
-    //     icon: 'database'
-    // },
-    // {
-    //     key: 'people',
-    //     icon: 'database'
-    // },
-    // {
-    //     key: 'regional',
-    //     icon: 'database'
-    // },
-    // {
-    //     key: 'symbols',
-    //     icon: 'database'
-    // },
     {
         key: 'travel',
         icon: 'airplane'

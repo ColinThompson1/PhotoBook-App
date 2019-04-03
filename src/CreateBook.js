@@ -87,7 +87,9 @@ class CreateBook extends Component {
         var ourBook = this.state.bookname;
         axios.post('https://localhost:3002/create', {
             "doc": {
-                "canvas": {}
+                "canvas": {},
+                "panel": {}
+
             }
         })
             .then(function (response) {

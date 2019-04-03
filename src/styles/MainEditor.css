@@ -27,6 +27,7 @@
     flex-direction: column;
     background-color: #CCD0D7;
     z-index: 10;
+    overflow: scroll;
 }
 
 .canvas {
