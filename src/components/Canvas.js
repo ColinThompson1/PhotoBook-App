@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import EmojiItem from "./item-types/EmojiItem";
 import EditableText from "./item-types/EditableText";
 import TextTypes from "./TextTypes";
+import ImageItem from "./item-types/ImageItem";
 import CanvasStyle from "../styles/Canvas.css";
 
 
@@ -42,8 +43,6 @@ class Canvas extends React.Component {
 
         // Lookup for functions for each type. Some form of registration would be pretty slick
         this.itemTypes = {
-            'BOX': (id, left, top, data) => {
-            },
             'emoji': (id, left, top, data) => {
                 return (
                     <EmojiItem
@@ -73,6 +72,19 @@ class Canvas extends React.Component {
                             const relativeOp = ['text', {r: {}, i: text}];
                             this.submitDataOp(id, relativeOp);
                         }}
+                    />
+                )
+            },
+            'image': (id, left, top, data) => {
+                return (
+                    <ImageItem
+                        id={id}
+                        key={id}
+                        left={left}
+                        top={top}
+                        isOnCanvas={true}
+                        hideSourceOnDrag={true}
+                        src={data.src}
                     />
                 )
             }
@@ -160,7 +172,7 @@ class Canvas extends React.Component {
 
 }
 
-export default DropTarget([ItemTypes.EMOJI, ItemTypes.EDITABLE_TEXT], spec, connect => ({
+export default DropTarget([ItemTypes.EMOJI, ItemTypes.EDITABLE_TEXT, ItemTypes.IMAGE], spec, connect => ({
     connectDropTarget: connect.dropTarget(),
 }))(Canvas)
 

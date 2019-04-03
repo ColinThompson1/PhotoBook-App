@@ -16,14 +16,9 @@ class LeftPanel extends React.Component {
         this.state = {
             activePanel: 'emoji'
         };
-
-        this.panels = {
-            'emoji': <EmojiItemsDetail/>,
-            'text': <EditableTextDetail/>,
-            'images': <ImageItemDetail otDoc={this.props.otDoc} otPath={this.props.otPath}/>
-        };
-
+        
         this.updateDetailView = this.updateDetailView.bind(this);
+        this.getPanel = this.getPanel.bind(this);
     }
 
     updateDetailView(itemLabel, e) {
@@ -38,10 +33,23 @@ class LeftPanel extends React.Component {
                     activePanel={this.state.activePanel}
                 />
                 <MenuDetail>
-                    {this.panels[this.state.activePanel] ? this.panels[this.state.activePanel] : <p>Nothing here yet</p>}
+                    {this.getPanel(this.state.activePanel)}
                 </MenuDetail>
             </div>
         )
+    }
+
+    getPanel(panel) {
+        switch(panel) {
+            case 'emoji':
+                return <EmojiItemsDetail/>;
+            case 'text':
+                return <EditableTextDetail/>;
+            case 'images':
+                return <ImageItemDetail otDoc={this.props.otDoc} otPath={this.props.otPath}/>;
+            default:
+                return <p>Nothing here yet</p>
+        }
     }
 
 }

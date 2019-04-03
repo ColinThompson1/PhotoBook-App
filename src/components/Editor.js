@@ -25,7 +25,7 @@ class Editor extends React.Component {
 
     componentDidMount() {
         conn.debug = true;
-        this.otDoc = conn.get('doc', 'b33dfd7b-e5b6-4bc3-aeba-27278cff4dbe');
+        this.otDoc = conn.get('doc', 'e24ba925-0767-42d5-83fe-d3ed4b167b8b');
         this.otDoc.subscribe();
         this.otDoc.on('load', this.handleOTUpdate);
         this.otDoc.on('op', this.handleOTUpdate)
@@ -58,9 +58,7 @@ class Editor extends React.Component {
             return (
                 <div className="editor">
                     <LeftPanel otDoc={this.otDoc} otPath={['doc', 'panel']}/>
-                    <Workspace
-                        otDoc={this.otDoc}
-                        docPath={['doc', 'canvas']}
+                    <Workspace otDoc={this.otDoc} docPath={['doc', 'canvas']}
                     />
                 </div>
             );

@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Divider} from "@blueprintjs/core";
+import {Button, Divider, Spinner} from "@blueprintjs/core";
 import ScrollableItems from "./ScrollableItems";
 import PropTypes from 'prop-types';
 import ImageItem from "./item-types/ImageItem";
@@ -9,6 +9,10 @@ class ImageItemDetail extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            isUploading: false
+        };
 
         this.getImages = this.getImages.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
@@ -36,10 +40,12 @@ class ImageItemDetail extends React.Component {
 
     uploadImage() {
         const input = document.querySelector('input[type="file"]');
-        var data = new FormData();
+        const data = new FormData();
         for (const file of input.files) {
             data.append('image',file,file.name)
         }
+
+        this.setState({isUploading: true});
 
         fetch(`https://${process.env.REACT_APP_DATASERVICE}/upload`, {
             method: 'POST',
@@ -54,7 +60,11 @@ class ImageItemDetail extends React.Component {
             this.addImage(data.id, data.url);
         }).catch((err) => {
             alert('Failed to upload image');
-        })
+            console.error(err);
+        }).finally(() => {
+            input.value = '';
+            this.setState({isUploading: false})
+        });
     }
 
     openImageSelector() {
@@ -83,22 +93,28 @@ class ImageItemDetail extends React.Component {
     render() {
         this.extractPanelData();
 
-        return (
-            <div className={'image-detail'}>
-                <div style={{paddingTop: '5px'}}>
-                    <input hidden={true} id="file-picker" type="file" name="image" onChange={this.uploadImage}/>
-                    <Button
-                        icon='document'
-                        text={'Upload Image'}
-                        onClick={this.openImageSelector}
-                    />
+        if (this.state.isUploading) {
+            return (
+                <Spinner/>
+            )
+        } else {
+            return (
+                <div className={'image-detail'}>
+                    <div style={{paddingTop: '5px'}}>
+                        <input hidden={true} id="file-picker" type="file" name="image" onChange={this.uploadImage}/>
+                        <Button
+                            icon='document'
+                            text={'Upload Image'}
+                            onClick={this.openImageSelector}
+                        />
+                    </div>
+                    <Divider vertical={'true'}/>
+                    <ScrollableItems classNames={'scrollable-icon'}>
+                        {this.getImages()}
+                    </ScrollableItems>
                 </div>
-                <Divider vertical={'true'}/>
-                <ScrollableItems classNames={'scrollable-icon'}>
-                    {this.getImages()}
-                </ScrollableItems>
-            </div>
-        );
+            );
+        }
     }
 
 }
