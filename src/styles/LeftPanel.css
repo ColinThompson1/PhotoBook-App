@@ -60,10 +60,18 @@
 }
 
 .scrollable-item {
-    width: 50px;
-    height: 50px;
     margin: 5px 5px 5px 5px;
     display: flex;
+}
+
+.scrollable-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.scrollable-row {
+    width: 200px;
+    height: 50px;
 }
 
 .scrollable-detail-items {
@@ -88,6 +96,11 @@
     display: flex;
 }
 
+.text-detail {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+}
 /* Item Types */
 
 .item-image {

@@ -1,11 +1,13 @@
 import React from "react";
 import ItemTypes from "./item-types/ItemTypes";
 import {DropTarget} from "react-dnd";
-import Box from "./item-types/Box";
 import {getElementOffset} from "../util/general-util.js"
 import * as uuid from "uuid";
 import PropTypes from 'prop-types';
 import EmojiItem from "./item-types/EmojiItem";
+import EditableText from "./item-types/EditableText";
+import TextTypes from "./TextTypes";
+import ImageItem from "./item-types/ImageItem";
 import CanvasStyle from "../styles/Canvas.css";
 
 
@@ -22,37 +24,15 @@ const spec = {
             const left = Math.round(item.left + delta.x);
             const top = Math.round(item.top + delta.y);
 
-            component.moveItem(item.id, left, top)
+            component.moveItem(item.id, left, top);
         } else {
             const canvasOffset = component.getOffset();
             const left = Math.round(delta.x - canvasOffset.left + initOffset.x);
             const top = Math.round(delta.y - canvasOffset.top + initOffset.y);
 
-            component.createItem(item.id + uuid.v4(), left, top, item.itemType, item.initData);
+            component.createItem(item.id + '_' + uuid.v4(), left, top, item.itemType, item.initData);
         }
     },
-};
-
-const itemTypes = {
-    'BOX': (id, left, top, data) => {
-    },
-    'emoji': (id, left, top, data, zIndex, canvas) => {
-        return (
-
-             <EmojiItem
-                 id={id}
-                 left={left}
-                 top={top}
-                 zIndex={zIndex}
-                 src={data.src}
-                 isOnCanvas={true}
-                 hideSourceOnDrag={true}
-                 onDelete={() => canvas.deleteItem(id)}
-                 onSendToBack={() => canvas.sendToBack(id, zIndex)}
-                 onBringToFront={() => canvas.bringToFront(id, zIndex)}
-             />
-        )
-    }
 };
 
 class Canvas extends React.Component {
@@ -61,6 +41,58 @@ class Canvas extends React.Component {
         super(...arguments);
         this.canvasRef = React.createRef();
 
+        // Lookup for functions for each type. Some form of registration would be pretty slick
+        this.itemTypes = {
+            'emoji': (id, left, top, data, zIndex, canvas) => {
+                return (
+                    <EmojiItem
+                        id={id}
+                        key={id}
+                        left={left}
+                        top={top}
+                        zIndex={zIndex}
+                        src={data.src}
+                        isOnCanvas={true}
+                        hideSourceOnDrag={true}
+                        onDelete={() => canvas.deleteItem(id)}
+                        onSendToBack={() => canvas.sendToBack(id, zIndex)}
+                        onBringToFront={() => canvas.bringToFront(id, zIndex)}
+                    />
+                )
+            },
+            'editableText': (id, left, top, data) => {
+                const tt = TextTypes[data.type];
+                return (
+                    <EditableText
+                        id={id}
+                        key={id}
+                        left={left}
+                        top={top}
+                        isOnCanvas={true}
+                        displayName={tt.displayName}
+                        textStyle={tt.style}
+                        text={data.text}
+                        onChange={(text) => {
+                            const relativeOp = ['text', {r: {}, i: text}];
+                            this.submitDataOp(id, relativeOp);
+                        }}
+                    />
+                )
+            },
+            'image': (id, left, top, data) => {
+                return (
+                    <ImageItem
+                        id={id}
+                        key={id}
+                        left={left}
+                        top={top}
+                        isOnCanvas={true}
+                        hideSourceOnDrag={true}
+                        src={data.src}
+                    />
+                )
+            }
+        };
         this.extractCanvasData = this.extractCanvasData.bind(this);
         this.getCanvasElements = this.getCanvasElements.bind(this);
         this.moveItem = this.moveItem.bind(this);
@@ -68,7 +100,7 @@ class Canvas extends React.Component {
         this.deleteItem = this.deleteItem.bind(this);
         this.sendToBack = this.sendToBack.bind(this);
         this.bringToFront = this.bringToFront.bind(this);
-
+        this.submitDataOp = this.submitDataOp.bind(this);
     }
 
     componentWillMount() {
@@ -99,8 +131,7 @@ class Canvas extends React.Component {
                 <div>
                     {this.getCanvasElements()}
                 </div>
-            </div>,
-
+            </div>
         )
     }
 
@@ -108,17 +139,7 @@ class Canvas extends React.Component {
         if (this.items) {
             return Object.keys(this.items).map(key => {
                 const {left, top, type, data, zIndex} = this.items[key];
-                return itemTypes[type](key, left, top, data, zIndex, this);
-                return (
-                    <Box
-                        key={key}
-                        id={key}
-                        left={left}
-                        top={top}
-                        hideSourceOnDrag={true}
-                        isOnCanvas={true}
-                    />
-                )
+                return this.itemTypes[type](key, left, top, data, zIndex, this);
             });
         }
     }
@@ -175,9 +196,15 @@ class Canvas extends React.Component {
         return getElementOffset(this.canvasRef.current);
     }
 
+    // Takes an op relative to the element's root
+    submitDataOp(id, relativeOp) {
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, 'data', ...relativeOp];
+        this.props.otDoc.submitOp(op);
+    }
+
 }
 
-export default DropTarget(ItemTypes.EMOJI, spec, connect => ({
+export default DropTarget([ItemTypes.EMOJI, ItemTypes.EDITABLE_TEXT, ItemTypes.IMAGE], spec, connect => ({
     connectDropTarget: connect.dropTarget(),
 }))(Canvas)
 

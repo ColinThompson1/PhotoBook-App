@@ -23,7 +23,7 @@ class Header extends React.Component {
             <Fragment>
                 <Navbar className="bp3-dark">
                     <Navbar.Group align={Alignment.LEFT}>
-                        <Navbar.Heading>PhotoBook Maker</Navbar.Heading>
+                        <Navbar.Heading>MixMem</Navbar.Heading>
                     </Navbar.Group>
 
                     <Navbar.Group align={Alignment.RIGHT}>

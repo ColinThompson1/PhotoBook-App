@@ -11,7 +11,8 @@ class Editor extends React.Component {
         super(props);
         this.state = {
             doc: {
-                canvas: {}
+                canvas: {},
+                panel: {}
             },
             isLoading: true
         };
@@ -19,21 +20,16 @@ class Editor extends React.Component {
         this.handleCanvasUpdate = this.handleCanvasUpdate.bind(this);
         this.handleInitData = this.handleInitData.bind(this);
         this.handleOTUpdate = this.handleOTUpdate.bind(this);
-        this.getWorkspace = this.getWorkspace.bind(this);
-
     }
 
 
     componentDidMount() {
-        //'42422d28-101b-4383-a395-0cef91b00f16'
         conn.debug = true;
         this.otDoc = conn.get('doc', this.props.id);
         this.otDoc.subscribe();
         this.otDoc.on('load', this.handleOTUpdate);
         this.otDoc.on('op', this.handleOTUpdate)
     }
-
-    componentWillUnmount() {}
 
     handleInitData() {
         this.setState({...this.state, doc: this.otDoc.data.doc, isLoading: false});
@@ -52,24 +48,23 @@ class Editor extends React.Component {
     }
 
     render() {
-        return (
-            <div className="editor">
-                <LeftPanel/>
-                {this.getWorkspace()}
-            </div>
-        )
-    }
-
-    getWorkspace() {
         if (this.state.isLoading) {
-            return <Spinner/>
+            return (
+                    <div className="editor-loading">
+                        <Spinner intent={'primary'} size={Spinner.SIZE_LARGE}/>
+                    </div>
+                );
         } else {
-            return <Workspace
-                otDoc={this.otDoc}
-                docPath={['doc', 'canvas']}
-            />
+            return (
+                <div className="editor">
+                    <LeftPanel otDoc={this.otDoc} otPath={['doc', 'panel']}/>
+                    <Workspace otDoc={this.otDoc} docPath={['doc', 'canvas']}
+                    />
+                </div>
+            );
         }
     }
+
 }
 
 export default Editor;

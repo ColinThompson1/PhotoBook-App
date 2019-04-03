@@ -108,7 +108,7 @@ class EmojiItemsDetail extends React.Component {
                     </ButtonGroup>
                 </div>
                 <Divider vertical={'true'}/>
-                <ScrollableItems>
+                <ScrollableItems classNames={'scrollable-icon'}>
                     {this.getEmojis()}
                 </ScrollableItems>
             </div>
