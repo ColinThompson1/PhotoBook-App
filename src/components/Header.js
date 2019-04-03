@@ -1,6 +1,20 @@
 import React, {Fragment} from "react";
 import {Button, Navbar} from "@blueprintjs/core";
 import {Alignment} from "@blueprintjs/core/lib/cjs/common/alignment";
+import axios from "axios";
+import ReactDOM from "react-dom";
+import Login from "../Login";
+import CreateBook from "../CreateBook";
+
+function LoginFunc() {
+    axios.post("/user/logout");
+    ReactDOM.render(<Login />, document.getElementById('root'));
+}
+
+function BookFunc(){
+    ReactDOM.render(<CreateBook />, document.getElementById('root'));
+}
+
 
 class Header extends React.Component {
 
@@ -9,13 +23,12 @@ class Header extends React.Component {
             <Fragment>
                 <Navbar className="bp3-dark">
                     <Navbar.Group align={Alignment.LEFT}>
-                        <Navbar.Heading>PhotoBook Maker</Navbar.Heading>
+                        <Navbar.Heading>MixMem</Navbar.Heading>
                     </Navbar.Group>
+
                     <Navbar.Group align={Alignment.RIGHT}>
-                        <Button className="bp3-minimal" icon={"document"} text={this.props.name}/>
-                        <Navbar.Divider/>
-                        <Button className="bp3-minimal" icon={"user"}/>
-                        <Button className="bp3-minimal" icon={"cog"}/>
+                        <Button className='bp3-minimal' icon='home' text='Home' onClick={BookFunc}/>
+                        <Button className="bp3-minimal" icon="log-out" text="Logout" onClick={LoginFunc} />
                     </Navbar.Group>
                 </Navbar>
             </Fragment>

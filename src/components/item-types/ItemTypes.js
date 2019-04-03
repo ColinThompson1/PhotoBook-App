@@ -1,4 +1,6 @@
 export default {
     BOX: 'box',
-    EMOJI: 'emoji'
+    EMOJI: 'emoji',
+    EDITABLE_TEXT: 'editableText',
+    IMAGE: 'image'
 }

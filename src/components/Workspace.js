@@ -2,8 +2,7 @@ import * as React from "react";
 import Canvas from "./Canvas";
 import PropTypes from 'prop-types';
 import {Button, ButtonGroup, Tag} from "@blueprintjs/core";
-
-
+import EditableText from "./item-types/EditableText";
 
 class Workspace extends React.Component {
 

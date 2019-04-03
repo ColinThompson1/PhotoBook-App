@@ -2,12 +2,16 @@ import React, {Component} from 'react';
 import Background from './images/back2.png';
 
 import './App.css';
-import {Navbar, Button, Alignment, Text, Card, Elevation} from "@blueprintjs/core";
+import {Navbar, Button, Alignment, Text, Card, Elevation, Spinner} from "@blueprintjs/core";
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import ReactDOM from "react-dom";
 import Register from "./Register";
 import axios from 'axios'
 import Login from "./Login"
 import Book from "./index";
+import Canvas from "./components/Canvas";
+
+var book = [];
 
 
 
@@ -27,18 +31,65 @@ var cardStyle = {
     margin: 'auto'
 }
 
+var photobookList = {
+    fontSize: '15px'
+}
+
 function LoginFunc() {
+    axios.post("/user/logout");
     ReactDOM.render(<Login />, document.getElementById('root'));
 }
+
+function getBooks(){
+    return axios.get("/user/test",{
+        params: {
+            username: localStorage.getItem('username')
+        }
+    }).then(function (response) {
+        localStorage.setItem("books",response.data.photobooks)
+        return response.data
+    })
+}
+
+
 
 
 
 class CreateBook extends Component {
 
+    constructor() {
+        super()
+        this.state = {
+            bookname: '',
+            htmlList: '',
+            books: '',
+            isLoaded: false,
+            links:[],
+            names:[],
+            tags:[]
+        }
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChange = this.handleChange.bind(this)
+
+    }
+
+
+
+    handleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+
+        })
+        console.log(this.state.bookname)
+    }
+
     handleSubmit(event){
+        var ourBook = this.state.bookname;
         axios.post('https://localhost:3002/create', {
             "doc": {
-                "canvas": {}
+                "canvas": {},
+                "panel": {}
+
             }
         })
             .then(function (response) {
@@ -46,7 +97,7 @@ class CreateBook extends Component {
                 localStorage.setItem('docID', response.data.id);
                 axios.post("/user/pb", {
                     "username": localStorage.getItem('username'),
-                    "docID" : localStorage.getItem('docID')
+                    "docID" : ourBook + ";" + "http://localhost:3000/book/" +localStorage.getItem('docID')
                 });
                 window.location.replace("http://localhost:3000/book/" + response.data.id);
 
@@ -55,26 +106,59 @@ class CreateBook extends Component {
                 console.log(error);
             });
 
-
-
-
-
-
-
-
-
-
         event.preventDefault();
     }
 
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
+    componentWillMount() {
+        getBooks().then(data =>{
+
+            // var s = data.photobooks.toString()
+            // var s1 = s.replace(/;/g, "   ")
+            // console.log(s)
+            // var s2 = s1.replace(/,/g, "\n")
+            // console.log(s2)
+            //
+            // this.setState({
+            //     books: s2
+            // })
+
+            for(var i = 0; i<data.photobooks.length; i++){
+
+                var s = data.photobooks[i].toString()
+                var s2 = s.split(";");
+
+                this.setState({
+                    names: this.state.names.concat(s2[0]),
+                    links: this.state.links.concat(s2[1])
+                })
+            }
+            console.log(this.state.names)
+            console.log(this.state.links)
+
+            for(var i=0; i<this.state.names.length; i++){
+                var s = "<a href=\"" + this.state.links[i] + "\">" + this.state.names[i] + "</a><br>"
+                this.setState({
+                    tags: this.state.tags.concat(s)
+                })
+            }
+
+            var s = this.state.tags.toString().replace(/,/g, "");
+            this.setState({
+                htmlList: s
+            })
+
+            console.log(this.state.htmlList)
+
+
+
+
         })
     }
 
 
     render() {
+
+
         return (
             <div className="App">
                 <Navbar className="bp3-dark">
@@ -96,7 +180,7 @@ class CreateBook extends Component {
                             <form name="form" /*onSubmit={this.handleSubmit}*/>
 
                                 <Text>Enter a name for your book...</Text>
-                                <input type="text" className="bp3-input .bp3-round" placeholder="Book name..." name="bookname" required/>
+                                <input type="text" className="bp3-input" placeholder="Book name..." name="bookname"  onChange={this.handleChange} required/>
 
 
 
@@ -108,10 +192,18 @@ class CreateBook extends Component {
 
                         <br/>
 
+
                         <Card>
                             <Text>Your PhotoBooks</Text>
+                            <section style={photobookList}>
+                                <p style={{
+                                    'whiteSpace': 'pre-wrap'
+                                }}>{ReactHtmlParser(this.state.htmlList)}</p>
+
+                            </section>
 
                         </Card>
+
 
                     </section>
                 </section>

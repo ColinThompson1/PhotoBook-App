@@ -7,6 +7,14 @@
     width: 100vw;
 }
 
+.editor-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 50px);
+    width: 100vw;
+}
+
 .left-panel {
     grid-column-start: 1;
     grid-column-end: 2;

@@ -10,7 +10,7 @@ const EmojiItem = (props) => {
              src={props.src}
              alt={props.id + ' emoji'}
         />
-    )
+    );
 };
 
 export default asDraggable(EmojiItem, ItemTypes.EMOJI);
