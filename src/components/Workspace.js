@@ -49,7 +49,10 @@ class Workspace extends React.Component {
         let canvasData = this.props.docPath
             .reduce((acc, key) => acc[key], this.props.otDoc.data);
 
-        if (!canvasData['pages']['page'+this.state.page]) {
+        //if we are in a brand new book
+        if (!canvasData['pages']) {
+            this.initPages();
+        } else if (!canvasData['pages']['page'+this.state.page]) {
             this.setState({page: this.state.page = 0});
             alert('It looks like the page you were on no longer exists... someone must have deleted it');
         }
