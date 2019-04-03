@@ -81,14 +81,12 @@ class Login extends Component {
                     localStorage.setItem('username', this.state.username);
 
                     // update App.js state
+                    console.log(localStorage.getItem('username'))
+
+
 
 
                     ReactDOM.render(<CreateBook />, document.getElementById('root'));
-
-                    // update the state to redirect to home
-                    // this.setState({
-                    //     redirectTo: '/'
-                    // })
 
 
                 }
