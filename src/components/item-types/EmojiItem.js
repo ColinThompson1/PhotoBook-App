@@ -20,5 +20,6 @@ EmojiItem.propTypes = {
     src: PropTypes.string.isRequired,
     onDelete: PropTypes.func,
     onSendToBack: PropTypes.func,
-    onBringToFront: PropTypes.func
+    onBringToFront: PropTypes.func,
+    onReturnToMiddle: PropTypes.func
 };
