@@ -93,11 +93,14 @@ class Canvas extends React.Component {
         const {connectDropTarget} = this.props;
 
         return connectDropTarget(
+
+
             <div className={'canvas corner-page-shadow-br'} ref={this.canvasRef}>
                 <div>
                     {this.getCanvasElements()}
                 </div>
-              </div>,
+            </div>,
+
         )
     }
 

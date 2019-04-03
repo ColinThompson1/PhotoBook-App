@@ -14,7 +14,6 @@ import Homepage from "./Homepage";
         return (
             <Router>
                 <div className="App">
-                    <Header name={"Untitled Photobook"}/>
                     <DragDropContextProvider backend={HTML5Backend}>
                         <Route path="/book" component={Book} />
                         <Route exact path="/" component={Home}/>
@@ -33,7 +32,11 @@ import Homepage from "./Homepage";
 
     function BookId({match}) {
         return(
-            <Editor id={match.params.id}/>
+            <div>
+                <Header/>
+                <Editor id={match.params.id}/>
+            </div>
+
         );
     }
 
