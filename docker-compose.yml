@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    build: .
+    image: stuseguin/cpsc559:photobook-app
     restart: always
     ports:
       - "3000:3000"
@@ -9,7 +9,7 @@ services:
       - REACT_APP_DATASERVICE=localhost:3002
       - PORT=3000
   ds:
-    build: ../PhotoBook-DS
+    image: stuseguin/cpsc559:photobook-ds
     restart: always
     ports:
       - "3002:3002"

@@ -19,10 +19,12 @@ class Workspace extends React.Component {
         this.addPage = this.addPage.bind(this);
         this.initPages = this.initPages.bind(this);
         this.deletePage = this.deletePage.bind(this);
-
+        this.checkIfCurrentPageNoLongerExists = this.checkIfCurrentPageNoLongerExists.bind(this);
     }
 
     render() {
+        this.checkIfCurrentPageNoLongerExists();
+
         return (
             <div className={"workspace"}>
                 <Canvas
@@ -41,6 +43,16 @@ class Workspace extends React.Component {
             </div>
 
         )
+    }
+
+    checkIfCurrentPageNoLongerExists() {
+        let canvasData = this.props.docPath
+            .reduce((acc, key) => acc[key], this.props.otDoc.data);
+
+        if (!canvasData['pages']['page'+this.state.page]) {
+            this.setState({page: this.state.page = 0});
+            alert('It looks like the page you were on no longer exists... someone must have deleted it');
+        }
     }
 
     initPages() {
@@ -99,10 +111,6 @@ class Workspace extends React.Component {
             this.decrementPage();
 
         } else {
-            const numPagesToRename = (pageCount-1) - this.state.page;
-
-            let canvasData = this.props.docPath
-                .reduce((acc, key) => acc[key], this.props.otDoc.data);
 
             //delete the page
             let op = [...this.props.docPath, 'pages', ['page'+this.state.page, {r: 'items'}]];
