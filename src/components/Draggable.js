@@ -46,6 +46,7 @@ function asDraggable(WrappedComponent, itemType) {
                             <Menu>
                                 <Menu.Item icon="delete" onClick={this.props.onDelete} text="Delete item"/>
                                 <Menu.Item icon="double-chevron-up" onClick={this.props.onSendToBack} text="Send to back"/>
+                                <Menu.Item icon="ungroup-objects" onClick={this.props.onReturnToMiddle} text="Return to middle"/>
                                 <Menu.Item icon="double-chevron-down" onClick={this.props.onBringToFront} text="Bring to front"/>
                             </Menu>
                         }

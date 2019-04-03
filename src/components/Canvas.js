@@ -49,6 +49,7 @@ const itemTypes = {
                  onDelete={() => canvas.deleteItem(id)}
                  onSendToBack={() => canvas.sendToBack(id, zIndex)}
                  onBringToFront={() => canvas.bringToFront(id, zIndex)}
+                 onReturnToMiddle={() => canvas.returnToMiddle(id, zIndex)}
              />
         )
     }
@@ -67,7 +68,7 @@ class Canvas extends React.Component {
         this.deleteItem = this.deleteItem.bind(this);
         this.sendToBack = this.sendToBack.bind(this);
         this.bringToFront = this.bringToFront.bind(this);
-
+        this.returnToMiddle = this.returnToMiddle.bind(this);
     }
 
     componentWillMount() {
@@ -124,6 +125,11 @@ class Canvas extends React.Component {
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, {r: id} ]
         this.props.otDoc.submitOp(op);
 
+    }
+
+    returnToMiddle(id, zIndex) {
+        const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 1}]];
+        this.props.otDoc.submitOp(op);
     }
 
     sendToBack(id, zIndex) {
