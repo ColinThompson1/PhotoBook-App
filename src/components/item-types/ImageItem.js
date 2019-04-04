@@ -17,5 +17,9 @@ export default asDraggable(ImageItem, ItemTypes.IMAGE);
 
 ImageItem.propTypes = {
     id: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired
+    src: PropTypes.string.isRequired,
+    onDelete: PropTypes.func,
+    onSendToBack: PropTypes.func,
+    onBringToFront: PropTypes.func,
+    onReturnToMiddle: PropTypes.func
 };

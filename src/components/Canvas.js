@@ -42,7 +42,7 @@ class Canvas extends React.Component {
         this.canvasRef = React.createRef();
 
         // Lookup for functions for each type. Some form of registration would be pretty slick
-        this.itemTypes = {
+         this.itemTypes = {
             'emoji': (id, left, top, data, zIndex, canvas) => {
                 return (
                     <EmojiItem
@@ -77,6 +77,7 @@ class Canvas extends React.Component {
                             const relativeOp = ['text', {r: {}, i: text}];
                             this.submitDataOp(id, relativeOp);
                         }}
+                        zIndex={zIndex}
                         onDelete={() => canvas.deleteItem(id)}
                         onSendToBack={() => canvas.sendToBack(id, zIndex)}
                         onBringToFront={() => canvas.bringToFront(id, zIndex)}
@@ -94,6 +95,7 @@ class Canvas extends React.Component {
                         isOnCanvas={true}
                         hideSourceOnDrag={true}
                         src={data.src}
+                        zIndex={zIndex}
                         onDelete={() => canvas.deleteItem(id)}
                         onSendToBack={() => canvas.sendToBack(id, zIndex)}
                         onBringToFront={() => canvas.bringToFront(id, zIndex)}
@@ -160,6 +162,7 @@ class Canvas extends React.Component {
     }
 
     sendToBack(id, zIndex) {
+        console.log(id, zIndex);
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 0}]];
         this.props.otDoc.submitOp(op);
 
@@ -203,6 +206,7 @@ class Canvas extends React.Component {
                 data: data
             }
         }];
+        console.log("STUART:::"+JSON.stringify(op));
         this.props.otDoc.submitOp(op);
     }
 

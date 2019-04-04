@@ -85,5 +85,9 @@ EditableText.propType = {
     displayName: PropTypes.string.isRequired,
     textStyle: PropTypes.object,
     onChange: PropTypes.func,
-    text: PropTypes.string
+    text: PropTypes.string,
+    onDelete: PropTypes.func,
+    onSendToBack: PropTypes.func,
+    onBringToFront: PropTypes.func,
+    onReturnToMiddle: PropTypes.func,
 };
