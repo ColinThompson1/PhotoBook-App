@@ -40,7 +40,6 @@ function asDraggable(WrappedComponent, itemType) {
             }
 
             if (isOnCanvas) {
-                console.log("Zindex" + zIndex + 'id' + this.props.id);
                 return connectDragSource(
                     <div style={{...(isOnCanvas ? canvasStyle : sourceStyle), top, left, zIndex}}>
                         <Popover
