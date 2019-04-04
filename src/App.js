@@ -6,7 +6,8 @@ import Editor from "./components/Editor";
 import {DragDropContextProvider} from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Homepage from "./Homepage";
+import Homepage from "./components/Homepage";
+import CreateBook from "./components/CreateBook";
 
 
 
@@ -16,10 +17,10 @@ import Homepage from "./Homepage";
                 <div className="App">
                     <DragDropContextProvider backend={HTML5Backend}>
                         <Route path="/book" component={Book} />
+                        <Route exact path="/create" component={CreateBook}/>
                         <Route exact path="/" component={Home}/>
                     </DragDropContextProvider>
                 </div>
-
             </Router>
         );
     }

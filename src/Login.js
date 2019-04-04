@@ -6,8 +6,8 @@ import './App.css';
 import {Navbar, Button, Alignment, Text, Card, Elevation, Toaster, Position, Intent} from "@blueprintjs/core";
 import ReactDOM from "react-dom";
 import Register from "./Register";
-import Homepage from './Homepage';
-import CreateBook from "./CreateBook";
+import Homepage from './components/Homepage';
+import CreateBook from "./components/CreateBook";
 
 var sectionStyle = {
     height: "95vh",

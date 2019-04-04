@@ -6,7 +6,7 @@ import './App.css';
 import {Navbar, Button, Alignment, Text, Card, Elevation, Toaster, Position, Intent} from "@blueprintjs/core";
 import ReactDOM from "react-dom";
 import Login from "./Login";
-import Homepage from './Homepage';
+import Homepage from './components/Homepage';
 
 var sectionStyle = {
     height: "95vh",
