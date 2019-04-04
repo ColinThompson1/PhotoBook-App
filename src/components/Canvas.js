@@ -61,7 +61,7 @@ class Canvas extends React.Component {
                     />
                 )
             },
-            'editableText': (id, left, top, data) => {
+            'editableText': (id, left, top, data, zIndex, canvas) => {
                 const tt = TextTypes[data.type];
                 return (
                     <EditableText
@@ -77,10 +77,14 @@ class Canvas extends React.Component {
                             const relativeOp = ['text', {r: {}, i: text}];
                             this.submitDataOp(id, relativeOp);
                         }}
+                        onDelete={() => canvas.deleteItem(id)}
+                        onSendToBack={() => canvas.sendToBack(id, zIndex)}
+                        onBringToFront={() => canvas.bringToFront(id, zIndex)}
+                        onReturnToMiddle={() => canvas.returnToMiddle(id, zIndex)}
                     />
                 )
             },
-            'image': (id, left, top, data) => {
+            'image': (id, left, top, data, zIndex, canvas) => {
                 return (
                     <ImageItem
                         id={id}
@@ -90,6 +94,10 @@ class Canvas extends React.Component {
                         isOnCanvas={true}
                         hideSourceOnDrag={true}
                         src={data.src}
+                        onDelete={() => canvas.deleteItem(id)}
+                        onSendToBack={() => canvas.sendToBack(id, zIndex)}
+                        onBringToFront={() => canvas.bringToFront(id, zIndex)}
+                        onReturnToMiddle={() => canvas.returnToMiddle(id, zIndex)}
                     />
                 )
             }
