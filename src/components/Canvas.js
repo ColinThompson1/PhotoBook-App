@@ -73,9 +73,8 @@ class Canvas extends React.Component {
                         displayName={tt.displayName}
                         textStyle={tt.style}
                         text={data.text}
-                        onChange={(text) => {
-                            const relativeOp = ['text', {r: {}, i: text}];
-                            this.submitDataOp(id, relativeOp);
+                        submit={(op) => {
+                            this.submitDataOp(id, op);
                         }}
                         zIndex={zIndex}
                         height={data.height}
