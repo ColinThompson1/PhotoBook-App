@@ -23,7 +23,9 @@ class EditableTextDetail extends React.Component {
                     textStyle={tt.style}
                     initData={{
                         type: tt.type, // Because when paced on a canvas the id will change to be a unique instance
-                        text: tt.placeholderText
+                        text: tt.placeholderText,
+                        height: '60px',
+                        width: '100px'
                     }}
                 />
             )

@@ -78,10 +78,16 @@ class Canvas extends React.Component {
                             this.submitDataOp(id, relativeOp);
                         }}
                         zIndex={zIndex}
+                        height={data.height}
+                        width={data.width}
                         onDelete={() => canvas.deleteItem(id)}
                         onSendToBack={() => canvas.sendToBack(id, zIndex)}
                         onBringToFront={() => canvas.bringToFront(id, zIndex)}
                         onReturnToMiddle={() => canvas.returnToMiddle(id, zIndex)}
+                        onResize={(h, w) => {
+                            const relativeOp = [['height', {r: {}, i: h}],['width', {r: {}, i: w}]];
+                            this.submitDataOp(id, relativeOp);
+                        }}
                     />
                 )
             },
@@ -155,14 +161,12 @@ class Canvas extends React.Component {
     }
 
 
-
     returnToMiddle(id, zIndex) {
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 1}]];
         this.props.otDoc.submitOp(op);
     }
 
     sendToBack(id, zIndex) {
-        console.log(id, zIndex);
         const op = [...this.props.docPath, 'pages', `page${this.props.page}`, 'items', id, ['zIndex', {r: zIndex}, {i: 0}]];
         this.props.otDoc.submitOp(op);
 
@@ -203,10 +207,11 @@ class Canvas extends React.Component {
                 left: left,
                 zIndex: 1,
                 type: type,
-                data: data
+                data: data,
+                height: 1,
+                width: 1
             }
         }];
-        console.log("STUART:::"+JSON.stringify(op));
         this.props.otDoc.submitOp(op);
     }
 
