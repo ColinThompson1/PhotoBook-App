@@ -6,7 +6,7 @@ import {Spinner} from "@blueprintjs/core";
 import EditorStyle from "../styles/MainEditor.css";
 
 class Editor extends React.Component {
-
+//this is our OT magic
     constructor(props) {
         super(props);
         this.state = {
@@ -46,7 +46,9 @@ class Editor extends React.Component {
         const op = ['doc', 'canvas', [{r: {}}], [{i: canvas}]];
         this.otDoc.submitOp(op)
     }
+    //On every change detected on a canvas update canvas using OT
 
+    //Display our canvas and panel code
     render() {
         if (this.state.isLoading) {
             return (
