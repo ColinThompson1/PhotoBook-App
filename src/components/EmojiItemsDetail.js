@@ -34,7 +34,7 @@ const emojiTypes = [
         icon: 'airplane'
     }
 ];
-
+//defining the emoji class and the state of the emoji panel
 class EmojiItemsDetail extends React.Component {
 
     constructor(props) {
@@ -46,7 +46,7 @@ class EmojiItemsDetail extends React.Component {
         this.getEmojis = this.getEmojis.bind(this);
         this.selectType = this.selectType.bind(this);
     }
-
+//maps all emoji objects based on their keys
     getEmojis() {
         const images = importAll(require.context('../images/emoji/', true, /\.(png|jpe?g|svg)$/), this.state.activeType);
         return Object.keys(images).map((key) => {
@@ -67,7 +67,7 @@ class EmojiItemsDetail extends React.Component {
     selectType(key) {
         this.setState({activeType: key})
     }
-
+//renders the emoji types by button group to swap icons and emojis in a scrollable window
     render() {
 
         const buttons = emojiTypes.map((type) => {
