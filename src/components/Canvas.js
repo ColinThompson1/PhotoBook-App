@@ -10,7 +10,7 @@ import TextTypes from "./TextTypes";
 import ImageItem from "./item-types/ImageItem";
 import CanvasStyle from "../styles/Canvas.css";
 
-
+//code for dragging items
 const spec = {
     drop(props, monitor, component) {
         if (!component) {
@@ -34,7 +34,7 @@ const spec = {
         }
     },
 };
-
+//making our canvas
 class Canvas extends React.Component {
 
     constructor() {
@@ -42,6 +42,7 @@ class Canvas extends React.Component {
         this.canvasRef = React.createRef();
 
         // Lookup for functions for each type. Some form of registration would be pretty slick
+        //define draggable types 
          this.itemTypes = {
             'emoji': (id, left, top, data, zIndex, canvas) => {
                 return (
@@ -160,7 +161,7 @@ class Canvas extends React.Component {
         }
     }
 
-
+//Code to move components that are layered
     returnToMiddle(id, zIndex) {
         if (!this.canvasData['pages'][`page${this.props.page}`]['items'][id]){
             return;
@@ -250,7 +251,7 @@ class Canvas extends React.Component {
     }
 
 }
-
+//drag and drop items
 export default DropTarget([ItemTypes.EMOJI, ItemTypes.EDITABLE_TEXT, ItemTypes.IMAGE], spec, connect => ({
     connectDropTarget: connect.dropTarget(),
 }))(Canvas)
