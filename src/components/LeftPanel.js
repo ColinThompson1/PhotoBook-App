@@ -7,7 +7,7 @@ import ImageItemDetail from "./ImageItemDetail";
 import PropTypes from 'prop-types';
 import LeftPanelStyle from "../styles/LeftPanel.css";
 
-
+//set the active state of the app to emojis
 class LeftPanel extends React.Component {
 
     constructor(props) {
@@ -38,7 +38,7 @@ class LeftPanel extends React.Component {
             </div>
         )
     }
-
+//lets the user scroll through their options like text, images, emojis ect
     getPanel(panel) {
         switch(panel) {
             case 'emoji':
