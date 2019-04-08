@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ScrollableItems = (props) => {
-
+//make any item with this tag scrollable
     function getItems() {
         if (props.children) {
             return props.children.map((item) => {
