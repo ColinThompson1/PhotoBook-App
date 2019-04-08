@@ -22,7 +22,7 @@ var sectionStyle = {
 var blurb = {
     fontSize: '30px'
 }
-
+//homepage to let the user know what our app is about
 class Homepage extends Component {
 
     render() {
