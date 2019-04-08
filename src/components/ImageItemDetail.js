@@ -4,7 +4,7 @@ import ScrollableItems from "./ScrollableItems";
 import PropTypes from 'prop-types';
 import ImageItem from "./item-types/ImageItem";
 
-
+//states for the images 
 class ImageItemDetail extends React.Component {
 
     constructor(props) {
@@ -32,12 +32,12 @@ class ImageItemDetail extends React.Component {
             this.props.otDoc.submitOp(op);
         }
     }
-
+//makes add images 
     addImage(id, url) {
         const op = [...this.props.otPath, 'images', id, {i: {id: id, url: url}}];
         this.props.otDoc.submitOp(op);
     }
-
+//allow user to upload to blurb
     uploadImage() {
         const input = document.querySelector('input[type="file"]');
         const data = new FormData();
@@ -71,7 +71,7 @@ class ImageItemDetail extends React.Component {
         const input = document.querySelector('input[type="file"]');
         input.click();
     }
-
+//display all images 
     getImages() {
         const images = this.panelData['images'];
         return Object.keys(images).map((key) => {
@@ -89,7 +89,7 @@ class ImageItemDetail extends React.Component {
             )
         });
     }
-
+//display all images in a scrollable window
     render() {
         this.extractPanelData();
 
