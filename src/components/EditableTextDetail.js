@@ -31,7 +31,7 @@ class EditableTextDetail extends React.Component {
             )
         })
     }
-
+//renders a textbox which can be written
     render() {
         return (
             <div className={'text-detail'}>
