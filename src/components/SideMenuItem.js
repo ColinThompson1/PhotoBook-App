@@ -3,7 +3,7 @@ import {Icon} from "@blueprintjs/core";
 import PropTypes from 'prop-types';
 
 class SideMenuItem extends React.Component {
-
+//if clicked change
     shouldComponentUpdate(nextProps, nextState) {
         return nextProps.active !== this.props.active;
     }
