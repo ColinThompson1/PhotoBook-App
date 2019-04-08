@@ -6,16 +6,17 @@ import ReactDOM from "react-dom";
 import Login from "../Login";
 import CreateBook from "./CreateBook";
 
+//not being used
 function LoginFunc() {
     axios.post("/user/logout");
     ReactDOM.render(<Login />, document.getElementById('root'));
 }
-
+//displays create book
 function BookFunc(){
     ReactDOM.render(<CreateBook />, document.getElementById('root'));
 }
 
-
+//making a header for our webpage
 class Header extends React.Component {
 
     render() {
