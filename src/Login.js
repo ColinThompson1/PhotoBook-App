@@ -104,7 +104,7 @@ class Login extends Component {
         event.preventDefault();
     }
 
-
+//Not currently using passport no security.
     render() {
         return (
             <div className="App">
