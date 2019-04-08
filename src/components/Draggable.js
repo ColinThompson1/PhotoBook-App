@@ -38,7 +38,7 @@ function asDraggable(WrappedComponent, itemType) {
             if (isDragging && hideSourceOnDrag) {
                 return null
             }
-
+            //makes sure is on canvas and items have their menus
             if (isOnCanvas) {
                 return connectDragSource(
                     <div style={{...(isOnCanvas ? canvasStyle : sourceStyle), top, left, zIndex}}>
@@ -67,7 +67,7 @@ function asDraggable(WrappedComponent, itemType) {
 
         }
     };
-
+//source of draggable item
     return DragSource(itemType, spec, (connect, monitor) => ({
         connectDragSource: connect.dragSource(),
         isDragging: monitor.isDragging(),
