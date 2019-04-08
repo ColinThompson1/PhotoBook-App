@@ -1,7 +1,7 @@
 import React from "react";
 import SideMenuItem from "./SideMenuItem";
 import PropTypes from 'prop-types';
-
+//define the navigation icons and the panel contents
 const navItems = [
     {
         key: 'templates',
@@ -43,7 +43,7 @@ class SideMenu extends React.Component {
             this.props.onUpdate(label, e);
         }
     }
-
+//on select re render the items in the new panel
     render() {
 
         let menuItems = navItems.map((i) => {
