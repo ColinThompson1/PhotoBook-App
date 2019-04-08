@@ -10,7 +10,7 @@ import Homepage from "./components/Homepage";
 import CreateBook from "./components/CreateBook";
 
 
-
+//return created components for the home menu
     function App() {
         return (
             <Router>
@@ -24,7 +24,7 @@ import CreateBook from "./components/CreateBook";
             </Router>
         );
     }
-
+//function to send user to book selected
     function Book({match}) {
         return (
             <Route path={`${match.path}/:id`} component={BookId} />
