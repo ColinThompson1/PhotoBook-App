@@ -22,6 +22,7 @@ class Workspace extends React.Component {
     }
 
     render() {
+        // need to make sure if user deletes page we dont lose consistency 
         this.checkIfCurrentPageNoLongerExists();
 
         return (
@@ -43,7 +44,7 @@ class Workspace extends React.Component {
 
         )
     }
-
+//check if page doesnt exist 
     checkIfCurrentPageNoLongerExists() {
         let canvasData = this.props.docPath
             .reduce((acc, key) => acc[key], this.props.otDoc.data);
@@ -56,7 +57,7 @@ class Workspace extends React.Component {
             alert('It looks like the page you were on no longer exists... someone must have deleted it');
         }
     }
-
+//create new page 
     initPages() {
         const op = [...this.props.docPath, 'pages', {i: {'page0': {'items': {}}}}];
         this.props.otDoc.submitOp(op);
