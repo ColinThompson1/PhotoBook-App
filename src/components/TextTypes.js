@@ -1,5 +1,6 @@
 
 // Yeah... decided not to name all of these
+//import all these super cool fonts
 export default {
     'plain-text': {
         type: 'plain-text',
