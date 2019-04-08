@@ -26,7 +26,7 @@ var cardStyle = {
     margin: 'auto'
 }
 
-
+//generates a new book
 class CreateBook extends Component {
 
     constructor() {
@@ -38,7 +38,7 @@ class CreateBook extends Component {
         this.goToBook = this.goToBook.bind(this);
 
     }
-
+//creates a blank panel and canvas to work on 
     handleSubmit(event){
         axios.post("https://" +process.env.REACT_APP_DATASERVICE + "/create", {
             "doc": {
@@ -57,13 +57,13 @@ class CreateBook extends Component {
 
         event.preventDefault()
     }
-
+//sends the user to the book 
     goToBook(){
         if (this.state.uuid != "")
             window.location.replace(window.location.origin + "/book/" + this.state.uuid);
     }
 
-
+//shows our home page and allows user to generate a new book then given a reference
     render() {
 
 
