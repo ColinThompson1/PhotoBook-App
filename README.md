@@ -3,9 +3,13 @@
 
 React front end for a collaborative photobook maker.
 
-### Setup
+## URL 
+Navigate to: http://52.183.38.255/ to access our live Photobook App
+
+### Local Setup
 
 ##### Env Variables
+- This is optional, the app comes preconfigured
 - Set the env variable REACT_APP_DATA_SERVICE to the url of your dataservice
 - Set the env PORT to 3000 (so it won't conflict with the dataservice)
 
